@@ -1,7 +1,12 @@
 "use client";
 import React from "react";
-import { BarChartCard, PieChartCard, StatCard } from "../components/Cards/DataCard";
+import {
+  BarChartCard,
+  PieChartCard,
+  StatCard,
+} from "../components/Cards/DataCards";
 import { FaMoneyCheck } from "react-icons/fa";
+import { OutletTableCard } from "../components/Cards/TableCards";
 
 const DashboardPage = () => {
   return (
@@ -40,6 +45,9 @@ const DashboardPage = () => {
             />
           </div>
           <div className="w-full flex flex-col mx-auto">
+            <div className="w-full flex flex-col md:flex-row justify-between mx-auto my-2">
+              <OutletTableCard title="All Outlets" />
+            </div>
             <div className="w-full flex flex-row justify-between mx-auto my-2">
               <BarChartCard statTitle="Weekly sales" />
             </div>

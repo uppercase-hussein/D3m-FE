@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { UploadHistoryTable } from "../components/Tables/UploadHistory";
+import { UploadHistoryTable } from "../components/Tables/AllTables";
 // import { TextInput } from "../components/Inputs/Inputs";
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
