@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <nav
-      className="w-full fixed flex flex-col bg-gray-100 text-gray-900 shadow-lg top-0 left-0"
+      className="w-full fixed flex flex-col bg-gray-100/90 text-gray-900 shadow-lg top-0 left-0"
       style={{ zIndex: "9999" }}
     >
       <div className="w-full px-8 py-4 flex flex-row justify-between items-center align-end">

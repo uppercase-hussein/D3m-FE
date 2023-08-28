@@ -32,7 +32,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
         <div className="flex flex-col items-end justify-between px-4 mb-4">
           <div className="w-full flex flex-row justify-between align-middle items-center mb-4">
-            <div className="text-white p-3 mr-4 rounded-full bg-red-500">
+            <div className="text-graay-500 p-3 mr-4 rounded-full bg-gray-400 border border-gray-500">
               {icon}
             </div>
             {/* Data */}
@@ -40,7 +40,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           </div>
           <div className="w-full flex flex-row justify-between items-end">
             {/* Percentage */}
-            <div className="text-red-500 font-bold text-md pl-2 w-auto border-b border-l border-red-400">
+            <div className="text-green-500 font-bold text-md pl-2 w-auto border-b-2 border-l-2 border-gray-500">
               {statPercentage}%
             </div>
             {/* Description */}
