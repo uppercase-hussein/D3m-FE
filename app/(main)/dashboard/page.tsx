@@ -12,7 +12,7 @@ const DashboardPage = () => {
   return (
     <>
       <div className="w-full h-auto bg-scale bg-gray-300">
-        <div className="pt-4 pb-12 px-14">
+        <div className="pt-80 md:pt-44 pb-12 px-14">
           {/* Header Stat Cards */}
           <div className="w-full flex flex-col md:flex-row justify-between mx-auto">
             <StatCard

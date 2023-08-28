@@ -115,7 +115,7 @@ export const CardTable = ({ tableRow }: TableProp) => {
 
   return (
     <>
-      <div className="w-[95%] mx-auto pt-2 relative flex flex-col min-w-0 break-words bg-white mb-6 shadow-xl rounded-lg mt-4">
+      <div className="w-[95%] mx-auto overflow-x-auto pt-2 relative flex flex-col min-w-0 break-words bg-white mb-6 shadow-xl rounded-lg mt-4">
         <table className="divide-y divide-gray-200">
           <thead>
             <tr>
