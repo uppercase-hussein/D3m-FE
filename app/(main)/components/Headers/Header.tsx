@@ -51,7 +51,7 @@ export default function Header() {
             />
           </a>
           {/* Title */}
-          <div className="mx-4">
+          <div className="hidden md:inline-block md:mx-4">
             <h1 className="text-gray-900 font-bold text-3xl uppercase">
               Genesis Group D3M Dashboard
             </h1>
