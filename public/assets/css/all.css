@@ -1,0 +1,211 @@
+/* CALENDAR CSS */
+.react-calendar {
+  width: 90%;
+  height: auto;
+  max-width: 100%;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  border: none;
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+
+.react-calendar--doubleView {
+  width: 700px;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer {
+  display: flex;
+  margin: -0.5em;
+}
+
+.react-calendar--doubleView .react-calendar__viewContainer > * {
+  width: 50%;
+  margin: 0.5em;
+}
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.react-calendar button {
+  margin: 0;
+  border: 0;
+  outline: none;
+}
+
+.react-calendar button:enabled:hover {
+  cursor: pointer;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  height: 64px;
+  width: 100%;
+  margin-bottom: 1.4em;
+}
+
+.react-calendar__navigation button {
+  min-width: 64px;
+  background: none;
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: #f0f0f0;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #e6e6e6;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.5em;
+}
+
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #dc0000;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #757575;
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 2em 0.5em;
+}
+
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 10px 6.6667px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+}
+
+.react-calendar__tile:disabled {
+  background-color: #f0f0f0;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6;
+}
+
+.react-calendar__tile--now {
+  background: #ffb5b5;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #ffa9a9;
+}
+
+.react-calendar__tile--hasActive {
+  background: #ff3131;
+  color: white;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #ffa9a9;
+}
+
+.react-calendar__tile--active {
+  background: #d10000;
+  color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #ff1010;
+  color: white;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #e6e6e6;
+}
+
+/* BG CSS */
+.bg-scale {
+  /* background-color: rgb(238, 42, 42); */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1034%26quot%3b)' fill='none'%3e%3cpath d='M 0%2c8 C 72%2c38.2 216%2c146.4 360%2c159 C 504%2c171.6 576%2c75.8 720%2c71 C 864%2c66.2 936%2c141.4 1080%2c135 C 1224%2c128.6 1368%2c58.2 1440%2c39L1440 560L0 560z' fill='rgba(255%2c 255%2c 255%2c 0.25)'%3e%3c/path%3e%3cpath d='M 0%2c357 C 57.6%2c329.8 172.8%2c234.6 288%2c221 C 403.2%2c207.4 460.8%2c285.6 576%2c289 C 691.2%2c292.4 748.8%2c237 864%2c238 C 979.2%2c239 1036.8%2c292 1152%2c294 C 1267.2%2c296 1382.4%2c257.2 1440%2c248L1440 560L0 560z' fill='rgba(255%2c 255%2c 255%2c 0.25)'%3e%3c/path%3e%3cpath d='M 0%2c552 C 57.6%2c516.4 172.8%2c386 288%2c374 C 403.2%2c362 460.8%2c484 576%2c492 C 691.2%2c500 748.8%2c412.8 864%2c414 C 979.2%2c415.2 1036.8%2c491.4 1152%2c498 C 1267.2%2c504.6 1382.4%2c457.2 1440%2c447L1440 560L0 560z' fill='rgba(255%2c 255%2c 255%2c 0.25)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1034'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg-bdays {
+  background-color: rgb(238, 42, 42);
+  background-image: url("https://cdn.shopify.com/s/files/1/0272/5848/6851/t/38/assets/why-we-celebrate-birthdays-with-cake-1660145035534.jpg?v=1660145036");
+}
+
+.inputGroup label {
+  font-size: 90%;
+  position: absolute;
+  left: 0;
+  padding: 0.9em;
+  margin-left: 0.4em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  color: #00000090;
+}
+
+.inputGroup :is(input:focus, input:valid) ~ label {
+  transform: translateY(-20%) scale(0.65);
+  margin: 0em;
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: transparent;
+}
+
+.inputGroup :is(input:focus, input:valid) {
+  border-color: rgb(200, 198, 150);
+}
+
+.sticky-header {
+  transition: top 0.3s ease-in-out;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
