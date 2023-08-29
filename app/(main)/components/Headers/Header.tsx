@@ -32,10 +32,7 @@ export default function Header() {
   };
 
   return (
-    <nav
-      className="w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-600 text-gray-900 shadow-lg top-0 left-0"
-      style={{ zIndex: "9999" }}
-    >
+    <nav className="z-50 w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-600 text-gray-900 shadow-lg top-0 left-0">
       <div className="w-full px-8 py-4 flex flex-row justify-between items-center align-end">
         <div className="flex justify-start items-center">
           {/* Company Logo */}
@@ -68,7 +65,9 @@ export default function Header() {
             {/* Tooltip */}
             <div style={{ position: "relative", zIndex: "999" }}>
               <Tooltip
-                icon={<BiInfoCircle className="w-5 h-5 mx-2 text-black/50 dark:text-white" />}
+                icon={
+                  <BiInfoCircle className="w-5 h-5 mx-2 text-black/50 dark:text-white" />
+                }
                 text="Filters can be used to get more specific data"
                 className="absolute top-[50%] left-[-30px] translate-y-[-50%]"
               />

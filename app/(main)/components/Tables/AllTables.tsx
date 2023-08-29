@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 // import { setCurrentProfile } from "@/app/redux/slices/profile.slice";
 import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { TableOptionsDropdown } from "../Dropdowns/AllDropdowns";
 
 interface TableRowItem {
   id: number;
@@ -170,9 +171,7 @@ export const CardTable = ({ tableRow }: TableProp) => {
                     </div>
                   </td>
                   <td className="whitespace-no-wrap p-4 text-black dark:text-white">
-                    <a href={item.path} target="_blank">
-                      <BiDotsVerticalRounded />
-                    </a>
+                    <TableOptionsDropdown />
                   </td>
                 </tr>
               ))

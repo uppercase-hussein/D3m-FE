@@ -1,7 +1,9 @@
 "use client";
 import { FaFileExcel, FaQuestionCircle, FaUser } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DarkModeToggle from "../Theme";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import { ViewOutletDetailsModal } from "../Buttons/ModalButton";
 
 export const UserDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -69,6 +71,64 @@ export const UserDropdown = () => {
               <span className="hover:border-b border-red-500"> Sign out</span>
             </li>
           </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const TableOptionsDropdown = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleOptionClick = (option: any) => {
+    console.log(`Option clicked: ${option}`);
+    setIsDropdownOpen(false);
+  };
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.addEventListener("click", handleOutsideClick);
+    } else {
+      document.removeEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isDropdownOpen]);
+
+  return (
+    <div className="relative">
+      <div className="cursor-pointer" onClick={toggleDropdown}>
+        <BiDotsVerticalRounded />
+      </div>
+      {isDropdownOpen && (
+        <div className="absolute w-[200px] z-50 top-full right-0 mt-1 bg-white dark:bg-gray-700 dark:hover:bg-gray-900 hover:bg-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
+          {/* Dropdown content */}
+          <div className="w-full">
+            <div onClick={() => handleOptionClick("Dark mode toggle")}>
+              <ViewOutletDetailsModal
+                outletName="Branch name"
+                modalTitle="Uploads for"
+                modalInstruction="View all days where outlet has uploaded foe the month"
+                modalCTA="Review"
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

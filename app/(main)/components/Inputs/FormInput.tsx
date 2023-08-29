@@ -14,11 +14,11 @@ export const FormInput: React.FC<FormInputProps> = ({
   placeholder,
 }) => {
   return (
-    <div className={`mb-2 ${className}`}>
+    <div className={`w-full mb-2 ${className}`}>
       <input
         type={type}
         id={id}
-        className="border border-gray-200 text-black rounded px-3 py-1 text-sm w-full"
+        className="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 text-black dark:text-gray-100 rounded px-3 py-1 text-sm"
         placeholder={placeholder}
       />
     </div>
