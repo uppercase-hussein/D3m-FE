@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <nav
-      className="w-full fixed flex flex-col bg-gray-100/90 text-gray-900 shadow-lg top-0 left-0"
+      className="w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-600 text-gray-900 shadow-lg top-0 left-0"
       style={{ zIndex: "9999" }}
     >
       <div className="w-full px-8 py-4 flex flex-row justify-between items-center align-end">
@@ -52,23 +52,23 @@ export default function Header() {
           </a>
           {/* Title */}
           <div className="hidden md:inline-block md:mx-4">
-            <h1 className="text-gray-900 font-bold text-3xl uppercase">
+            <h1 className="font-bold text-3xl uppercase dark:text-gray-100">
               Genesis Group D3M Dashboard
             </h1>
-            <p className="text-gray-600 font-light text-sm">
+            <p className="text-gray-500 dark:text-gray-300 font-light text-sm">
               Company Data-Driven Decision Making Platform
             </p>
           </div>
         </div>
         <UserDropdown />
       </div>
-      <div className="w-full py-4 flex flex-row justify-between items-center align-end border-t border-gray-200">
+      <div className="w-full py-4 flex flex-row justify-between items-center align-end border-t border-gray-200 dark:border-gray-700">
         <div className="w-[100%] px-8 flex flex-col md:flex-row justify-between">
           <div className="flex flex-col md:flex-row w-full relative">
             {/* Tooltip */}
             <div style={{ position: "relative", zIndex: "999" }}>
               <Tooltip
-                icon={<BiInfoCircle className="w-5 h-5 mx-2 text-black/50" />}
+                icon={<BiInfoCircle className="w-5 h-5 mx-2 text-black/50 dark:text-white" />}
                 text="Filters can be used to get more specific data"
                 className="absolute top-[50%] left-[-30px] translate-y-[-50%]"
               />

@@ -22,8 +22,8 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title }) => {
 
   return (
     <>
-      <div className="w-full bg-white text-gray-900 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 bg-red-500 uppercase">
+      <div className="w-full bg-white dark:bg-gray-900 text-gray-900 rounded-md m-2 shadow-md">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 bg-red-500 dark:bg-gray-800 uppercase">
           {title}
         </div>
         <CardTable tableRow={dummyData} />

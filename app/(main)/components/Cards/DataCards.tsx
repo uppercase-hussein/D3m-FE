@@ -26,17 +26,19 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   return (
     <>
-      <div className="w-full bg-white text-gray-900 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 bg-red-500 uppercase">
+      <div className="w-full bg-white dark:bg-gray-900 rounded-md m-2 shadow-md">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 bg-red-500 dark:bg-gray-800 uppercase">
           {statTitle}
         </div>
         <div className="flex flex-col items-end justify-between px-4 mb-4">
           <div className="w-full flex flex-row justify-between align-middle items-center mb-4">
-            <div className="text-graay-500 p-3 mr-4 rounded-full bg-gray-400 border border-gray-500">
+            <div className="text-gray-600 dark:text-white p-3 mr-4 rounded-full bg-gray-400 dark:bg-gray-700 border border-gray-500">
               {icon}
             </div>
             {/* Data */}
-            <div className="text-black font-light text-3xl">{data}</div>
+            <div className="text-black dark:text-white font-light text-3xl">
+              {data}
+            </div>
           </div>
           <div className="w-full flex flex-row justify-between items-end">
             {/* Percentage */}
@@ -62,8 +64,8 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
     datasets: [
       {
         label: "My First dataset",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "#33FF92A1",
+        borderColor: "#29EF22",
         data: [0, 10, 5, 2, 20, 30, 45],
       },
     ],
@@ -71,11 +73,13 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
 
   return (
     <>
-      <div className="w-full bg-white text-gray-900 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 bg-red-500 uppercase">
+      <div className="w-full bg-white dark:bg-gray-200 rounded-md m-2 shadow-md">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-500 uppercase">
           {statTitle}
         </div>
-        <Bar data={data} />
+        <div className="px-12 pt-2 pb-4">
+          <Bar data={data} />
+        </div>
       </div>
     </>
   );
@@ -91,8 +95,8 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
     datasets: [
       {
         label: "My First dataset",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "#33FF9290",
+        borderColor: "#29EF22",
         data: [0, 10, 5, 2, 20, 30, 45],
       },
     ],
@@ -100,11 +104,13 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
 
   return (
     <>
-      <div className="w-full md:w-[30%] bg-white text-gray-900 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 bg-red-500 uppercase">
+      <div className="w-full md:w-2/3 bg-white dark:bg-gray-200 rounded-md m-2 shadow-md">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-500 uppercase">
           {statTitle}
         </div>
-        <Pie data={data} width={10} height={10} />
+        <div className="px-12 pt-2 pb-4">
+          <Pie data={data} width={10} height={10} />
+        </div>
       </div>
     </>
   );

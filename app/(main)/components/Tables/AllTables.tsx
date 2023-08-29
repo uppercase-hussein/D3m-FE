@@ -115,23 +115,23 @@ export const CardTable = ({ tableRow }: TableProp) => {
 
   return (
     <>
-      <div className="w-[95%] mx-auto overflow-x-auto pt-2 relative flex flex-col min-w-0 break-words bg-white mb-6 shadow-xl rounded-lg mt-4">
-        <table className="divide-y divide-gray-200">
+      <div className="w-[95%] mx-auto overflow-x-auto pt-2 relative flex flex-col min-w-0 break-words bg-white dark:bg-gray-900 mb-6 shadow-xl rounded-lg mt-4">
+        <table className="divide-y divide-gray-200 dark:divide-gray-600">
           <thead>
             <tr>
-              <th className="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
                 S/N
               </th>
-              <th className="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
                 Column 1
               </th>
-              <th className="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
                 Column 2
               </th>
-              <th className="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
                 Column 3
               </th>
-              <th className="py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+              <th className="py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider"></th>
             </tr>
           </thead>
           <tbody>
@@ -139,37 +139,37 @@ export const CardTable = ({ tableRow }: TableProp) => {
               tableRow?.map((item: any, index: any) => (
                 <tr
                   key={index}
-                  className={`hover:bg-gray-200 transition-all duration-200 ease-in cursor-pointer ${
-                    index % 2 ? "bg-gray-100" : null
+                  className={`hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 ease-in cursor-pointer ${
+                    index % 2 ? "bg-gray-100 dark:bg-gray-800" : null
                   }`}
                 >
                   <td className="px-6 py-2 whitespace-no-wrap">
-                    <div className="text-sm leading-5 font-medium text-gray-900">
+                    <div className="text-sm leading-5 font-medium text-gray-900 dark:text-gray-100">
                       {index + 1}
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
-                    <div className="text-sm leading-5 text-gray-500">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
                       <a href={item.path} target="_blank">
                         {item.outletName}
                       </a>
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
-                    <div className="text-sm leading-5 text-gray-500">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
                       <a href={item.path} target="_blank">
                         {item.userGain}
                       </a>
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
-                    <div className="text-sm leading-5 text-gray-500">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
                       <a href={item.path} target="_blank">
                         {item.userLost}
                       </a>
                     </div>
                   </td>
-                  <td className="whitespace-no-wrap p-4 text-black">
+                  <td className="whitespace-no-wrap p-4 text-black dark:text-white">
                     <a href={item.path} target="_blank">
                       <BiDotsVerticalRounded />
                     </a>

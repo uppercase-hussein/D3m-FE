@@ -1,6 +1,7 @@
 "use client";
 import { FaFileExcel, FaQuestionCircle, FaUser } from "react-icons/fa";
 import React, { useState } from "react";
+import DarkModeToggle from "../Theme";
 
 export const UserDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -10,6 +11,7 @@ export const UserDropdown = () => {
 
   const handleOptionClick = (option: any) => {
     console.log(`Option clicked: ${option}`);
+    // setIsDropdownOpen(false);
   };
 
   const currentDate = new Date();
@@ -51,6 +53,14 @@ export const UserDropdown = () => {
             >
               <FaQuestionCircle className="w-4 mr-2" />
               <span className="w-full text-left">Query Staff/Outlet</span>
+            </li>
+            <li
+              onClick={() => handleOptionClick("Dark mode toggle")}
+              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b border-gray-300 hover:bg-gray-300 transition-all ease-in duration-150"
+            >
+              <span className="w-full">
+                <DarkModeToggle />
+              </span>
             </li>
             <li
               onClick={() => handleOptionClick("Sign Out")}
