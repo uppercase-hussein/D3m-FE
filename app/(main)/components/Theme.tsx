@@ -1,24 +1,15 @@
-"use client";
+import React from "react";
 import { FiSun, FiMoon } from "react-icons/fi";
-import React, { useState, useEffect } from "react";
 
-const DarkModeToggle = () => {
-  const [darkMode, setDarkMode] = useState(false);
+interface DarkModeToggleProps {
+  darkMode: boolean;
+  handleDarkModeToggle: () => void;
+}
 
-  const handleDarkModeToggle = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem("darkMode", String(newDarkMode));
-  };
-
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [darkMode]);
-
+const DarkModeToggle: React.FC<DarkModeToggleProps> = ({
+  darkMode,
+  handleDarkModeToggle,
+}) => {
   return (
     <button
       className="w-full rounded-full flex items-center justify-center transition duration-500 ease-in-out"
@@ -26,12 +17,12 @@ const DarkModeToggle = () => {
     >
       {darkMode ? (
         <span className="flex flex-row justify-between items-center text-md">
-          <FiSun className="text-gray-900 rounded-full mr-3" />D<sup>3</sup>M
+          <FiSun className="text-gray-900 dark:text-yellow-500 rounded-full mr-3" />D<sup>3</sup>M
           Light
         </span>
       ) : (
         <span className="flex flex-row justify-between items-center text-md">
-          <FiMoon className="text-gray-900 rounded-full mr-3" />D<sup>3</sup>M
+          <FiMoon className="text-gray-900 dark:text-white rounded-full mr-3" />D<sup>3</sup>M
           Dark
         </span>
       )}

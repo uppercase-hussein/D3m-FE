@@ -32,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <nav className="z-50 w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-600 text-gray-900 shadow-lg top-0 left-0">
+    <nav className="z-50 w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-900/90 text-gray-900 shadow-lg top-0 left-0">
       <div className="w-full px-8 py-4 flex flex-row justify-between items-center align-end">
         <div className="flex justify-start items-center">
           {/* Company Logo */}

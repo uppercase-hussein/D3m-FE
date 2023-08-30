@@ -32,7 +32,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
         <div className="flex flex-col items-end justify-between px-4 mb-4">
           <div className="w-full flex flex-row justify-between align-middle items-center mb-4">
-            <div className="text-gray-600 dark:text-white p-3 mr-4 rounded-full bg-gray-400 dark:bg-gray-700 border border-gray-500">
+            <div className="text-gray-600 dark:text-white p-3 mr-4 rounded-full bg-gray-300 dark:bg-gray-700 border dark:border-gray-500 border-gray-400">
               {icon}
             </div>
             {/* Data */}
@@ -42,7 +42,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           </div>
           <div className="w-full flex flex-row justify-between items-end">
             {/* Percentage */}
-            <div className="text-green-500 font-bold text-md pl-2 w-auto border-b-2 border-l-2 border-gray-500">
+            <div className="text-green-500 font-bold text-md pl-2 w-auto border-b-2 border-l-2 border-gray-300 dark:border-gray-500">
               {statPercentage}%
             </div>
             {/* Description */}
@@ -74,7 +74,7 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
   return (
     <>
       <div className="w-full bg-white dark:bg-gray-200 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-500 uppercase">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-800 uppercase">
           {statTitle}
         </div>
         <div className="px-12 pt-2 pb-4">
@@ -105,7 +105,7 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
   return (
     <>
       <div className="w-full md:w-2/3 bg-white dark:bg-gray-200 rounded-md m-2 shadow-md">
-        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-500 uppercase">
+        <div className="w-full text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-300 bg-red-500 dark:bg-gray-800 uppercase">
           {statTitle}
         </div>
         <div className="px-12 pt-2 pb-4">

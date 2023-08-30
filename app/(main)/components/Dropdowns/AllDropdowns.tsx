@@ -5,16 +5,55 @@ import DarkModeToggle from "../Theme";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { ViewOutletDetailsModal } from "../Buttons/ModalButton";
 
+// User Dropdown
 export const UserDropdown = () => {
+  const [darkMode, setDarkMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  /* Dropdown Handles */
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.addEventListener("click", handleOutsideClick);
+    } else {
+      document.removeEventListener("click", handleOutsideClick);
+    }
 
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isDropdownOpen]);
+
+  /* Handle options */
   const handleOptionClick = (option: any) => {
     console.log(`Option clicked: ${option}`);
-    // setIsDropdownOpen(false);
+    setIsDropdownOpen(false);
   };
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  /* Dark mode stuff */
+  const handleDarkModeToggle = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem("darkMode", String(newDarkMode));
+  };
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
@@ -33,35 +72,37 @@ export const UserDropdown = () => {
         <FaUser className="text-gray-600 text-center mx-auto" />
       </div>
       {isDropdownOpen && (
-        <div className="absolute w-[200px] z-50 top-full right-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+        <div className="absolute w-[200px] z-50 top-full right-0 mt-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg">
           {/* Dropdown content */}
-          <div className="pt-4 pb-6 rounded-t-md bg-gray-100">
-            <h1 className="text-center font-semibold  rounded-t-md">
+          <div className="pt-4 pb-6 px-2 rounded-t-md bg-gray-100 dark:bg-gray-800">
+            <h1 className="text-center font-semibold rounded-t-md dark:text-white">
               Welcome, User
             </h1>
-            <p className="text-center text-sm text-gray-500">{formattedDate}</p>
+            <p className="text-center text-xs text-gray-500 dark:text-white/60">
+              {formattedDate}
+            </p>
           </div>
-          <ul className="w-full">
+          <ul className="w-full text-gray-900 dark:text-white">
             <li
               onClick={() => handleOptionClick("Export All Data")}
-              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b border-gray-300 hover:bg-gray-300 transition-all ease-in duration-150"
+              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b dark:hover:bg-gray-700 border-gray-300 dark:border-gray-700 hover:bg-gray-300 transition-all ease-in duration-150"
             >
               <FaFileExcel className="w-4 mr-2" />
               <span className="w-full text-left">Export All Data</span>
             </li>
             <li
               onClick={() => handleOptionClick("Query Staff/Outlet")}
-              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b border-gray-300 hover:bg-gray-300 transition-all ease-in duration-150"
+              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b dark:hover:bg-gray-700 border-gray-300 dark:border-gray-700 hover:bg-gray-300 transition-all ease-in duration-150"
             >
               <FaQuestionCircle className="w-4 mr-2" />
               <span className="w-full text-left">Query Staff/Outlet</span>
             </li>
-            <li
-              onClick={() => handleOptionClick("Dark mode toggle")}
-              className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b border-gray-300 hover:bg-gray-300 transition-all ease-in duration-150"
-            >
+            <li className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b dark:hover:bg-gray-700 border-gray-300 dark:border-gray-700 hover:bg-gray-300 transition-all ease-in duration-150">
               <span className="w-full">
-                <DarkModeToggle />
+                <DarkModeToggle
+                  darkMode={darkMode}
+                  handleDarkModeToggle={handleDarkModeToggle}
+                />
               </span>
             </li>
             <li
@@ -77,6 +118,7 @@ export const UserDropdown = () => {
   );
 };
 
+// Table Options Dropdown
 export const TableOptionsDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
