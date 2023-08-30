@@ -10,16 +10,30 @@ export const UserDropdown = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-  /* Dropdown Handles */
+  /* Dropdown Toggle stuff */
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((prevIsOpen) => !prevIsOpen);
   };
   useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
     if (isDropdownOpen) {
       document.addEventListener("click", handleOutsideClick);
-    } else {
-      document.removeEventListener("click", handleOutsideClick);
     }
 
     return () => {
@@ -31,14 +45,6 @@ export const UserDropdown = () => {
   const handleOptionClick = (option: any) => {
     console.log(`Option clicked: ${option}`);
     setIsDropdownOpen(false);
-  };
-  const handleOutsideClick = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsDropdownOpen(false);
-    }
   };
 
   /* Dark mode stuff */
@@ -54,14 +60,6 @@ export const UserDropdown = () => {
       document.body.classList.remove("dark");
     }
   }, [darkMode]);
-
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 
   return (
     <div className="relative">
@@ -107,9 +105,11 @@ export const UserDropdown = () => {
             </li>
             <li
               onClick={() => handleOptionClick("Sign Out")}
-              className="mt-1 py-3 px-4 text-center text-red-500 text-sm cursor-pointer transition-all ease-in duration-150"
+              className="mt-1 py-3 px-4 text-center text-red-500 dark:text-red-400 text-sm cursor-pointer transition-all ease-in duration-150"
             >
-              <span className="hover:border-b border-red-500"> Sign out</span>
+              <span className="hover:border-b border-red-500 dark:border-red-400">
+                Sign out
+              </span>
             </li>
           </ul>
         </div>
@@ -123,35 +123,34 @@ export const TableOptionsDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
+  /* Dropdown Toggle stuff */
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((prevIsOpen) => !prevIsOpen);
   };
-
-  const handleOptionClick = (option: any) => {
-    console.log(`Option clicked: ${option}`);
-    setIsDropdownOpen(false);
-  };
-
-  const handleOutsideClick = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsDropdownOpen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
     if (isDropdownOpen) {
       document.addEventListener("click", handleOutsideClick);
-    } else {
-      document.removeEventListener("click", handleOutsideClick);
     }
 
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isDropdownOpen]);
+
+  /* Handle options */
+  const handleOptionClick = (option: any) => {
+    console.log(`Option clicked: ${option}`);
+    setIsDropdownOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -162,14 +161,12 @@ export const TableOptionsDropdown = () => {
         <div className="absolute w-[200px] z-50 top-full right-0 mt-1 bg-white dark:bg-gray-700 dark:hover:bg-gray-900 hover:bg-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
           {/* Dropdown content */}
           <div className="w-full">
-            <div onClick={() => handleOptionClick("Dark mode toggle")}>
-              <ViewOutletDetailsModal
-                outletName="Branch name"
-                modalTitle="Uploads for"
-                modalInstruction="View all days where outlet has uploaded foe the month"
-                modalCTA="Review"
-              />
-            </div>
+            <ViewOutletDetailsModal
+              outletName="Branch name"
+              modalTitle="Uploads for"
+              modalInstruction="View all days where outlet has uploaded for the month"
+              modalCTA="Review"
+            />
           </div>
         </div>
       )}

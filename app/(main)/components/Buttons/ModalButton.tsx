@@ -30,14 +30,14 @@ export const ViewOutletDetailsModal: React.FC<ModalButtonProps> = ({
   return (
     <div>
       <div
-        className="z-10 w-full px-4 py-2 text-gray-900 dark:text-white/90 text-sm"
+        className="z-90 w-full px-4 py-2 text-gray-900 dark:text-white/90 text-sm"
         onClick={openModal}
       >
         View Details
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-[70%] bg-white dark:bg-gray-800 pt-4 pb-4 rounded-md relative">
+          <div className="w-[70%] bg-white dark:bg-gray-800 pt-4 rounded-md relative">
             <button
               className="absolute top-0 left-0 m-4 text-xl"
               onClick={closeModal}
@@ -63,10 +63,10 @@ export const ViewOutletDetailsModal: React.FC<ModalButtonProps> = ({
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-between px-8 mx-auto">
+            <div className="w-full text-center bg-red-400 text-white hover:bg-red-500 px-8 transition-all ease-in duration-150">
               {/* Close modal */}
               <button
-                className="text-sm text-red-500 hover:text-red-700 transition-all duration-200 ease-in"
+                className="w-full text-sm py-3 transition-all duration-200 ease-in"
                 onClick={closeModal}
               >
                 close
