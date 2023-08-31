@@ -59,14 +59,14 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title }) => {
       <div
         className={`w-full ${
           expanded ? "h-screen p-4" : "bg-white dark:bg-gray-900"
-        } text-gray-900 rounded-md m-2 shadow-md overflow-hidden transition-all duration-300`}
+        } text-gray-900 rounded-md shadow-md overflow-hidden transition-all duration-300`}
       >
         <div
           className={`w-full flex justify-between bg-red-500 dark:bg-gray-800 text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 uppercase`}
         >
           <h1 className="w-full text-center">{title}</h1>
           <span
-            className="mx-2 flex-end text-white font-bold rounded hover:cursor-pointer"
+            className="mx-2 flex-end text-white/50 font-bold rounded hover:cursor-pointer"
             onClick={handleExpandClick}
           >
             {expanded ? <IoContractOutline /> : <IoExpandOutline />}

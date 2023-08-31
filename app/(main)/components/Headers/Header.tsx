@@ -37,7 +37,7 @@ export default function Header() {
         <div className="flex justify-start items-center">
           {/* Company Logo */}
           <a
-            href="/"
+            href="/dashboard"
             className="lg:inline-block text-5xl font-bold cursor-pointer"
           >
             <img

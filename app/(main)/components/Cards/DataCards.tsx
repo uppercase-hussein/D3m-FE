@@ -89,7 +89,7 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
         >
           <h1 className="w-full text-center">{statTitle}</h1>
           <span
-            className="mx-2 flex-end text-white font-bold rounded hover:cursor-pointer"
+            className="mx-2 flex-end text-white/50 font-bold rounded hover:cursor-pointer"
             onClick={handleExpandClick}
           >
             {expanded ? <IoContractOutline /> : <IoExpandOutline />}
@@ -101,10 +101,10 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
       </div>
       {expanded && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
-          <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white p-4 rounded shadow-md">
-            <Bar data={data} />
+          <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white rounded shadow-md">
+            <Bar data={data} className="p-4" />
             <button
-              className="w-full mt-8 mx-auto text-red-500 text-sm font-bold py-2 px-4 uppercase text-center"
+              className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
               onClick={handleExpandClick}
             >
               Minimize
@@ -150,7 +150,7 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
         >
           <h1 className="w-full text-center">{statTitle}</h1>
           <span
-            className="mx-2 flex-end text-white font-bold rounded hover:cursor-pointer"
+            className="mx-2 flex-end text-white/50 font-bold rounded hover:cursor-pointer"
             onClick={handleExpandClick}
           >
             {expanded ? <IoContractOutline /> : <IoExpandOutline />}
@@ -162,10 +162,10 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
       </div>
       {expanded && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
-          <div className="w-[300px] min-w-[500px] bg-white p-4 rounded shadow-md">
-            <Pie data={data} width={10} height={10} />
+          <div className="w-[300px] min-w-[500px] bg-white rounded shadow-md">
+            <Pie data={data} width={10} height={10} className="p-4" />
             <button
-              className="w-full mt-8 mx-auto text-red-500 text-sm font-bold py-2 px-4 uppercase text-center"
+              className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
               onClick={handleExpandClick}
             >
               Minimize
