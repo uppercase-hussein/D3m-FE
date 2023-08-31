@@ -5,7 +5,7 @@ import {
   PieChartCard,
   StatCard,
 } from "../components/Cards/DataCards";
-import { FaMoneyCheck } from "react-icons/fa";
+import { FaMoneyCheck, FaNairaSign } from "react-icons/fa6";
 import { OutletTableCard } from "../components/Cards/TableCards";
 
 const DashboardPage = () => {
@@ -20,28 +20,28 @@ const DashboardPage = () => {
               statTitle="Total Sales"
               statPercentage={83}
               statDescription={"Annual total sales"}
-              icon={<FaMoneyCheck />}
+              icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
               data={1234300}
               statTitle="Total Sales"
               statPercentage={83}
               statDescription={"Annual total sales"}
-              icon={<FaMoneyCheck />}
+              icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
               data={1234300}
               statTitle="Total Sales"
               statPercentage={83}
               statDescription={"Annual total sales"}
-              icon={<FaMoneyCheck />}
+              icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
               data={1234300}
               statTitle="Total Sales"
               statPercentage={83}
               statDescription={"Annual total sales"}
-              icon={<FaMoneyCheck />}
+              icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
           </div>
           <div className="w-full flex flex-col mx-auto">

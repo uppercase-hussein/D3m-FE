@@ -3,17 +3,26 @@ import { FiSun, FiMoon } from "react-icons/fi";
 
 interface DarkModeToggleProps {
   darkMode: boolean;
-  handleDarkModeToggle: () => void;
+  handleToggle: () => void;
+  additionalFunction?: () => void;
 }
 
 const DarkModeToggle: React.FC<DarkModeToggleProps> = ({
   darkMode,
-  handleDarkModeToggle,
+  handleToggle,
+  additionalFunction,
 }) => {
+  const handleClick = () => {
+    handleToggle();
+    if (additionalFunction) {
+      additionalFunction();
+    }
+  };
+
   return (
     <button
       className="w-full py-2 rounded-full flex items-center justify-center transition duration-500 ease-in-out"
-      onClick={handleDarkModeToggle}
+      onClick={handleClick}
     >
       {darkMode ? (
         <span className="w-full flex flex-row justify-between items-center text-md">

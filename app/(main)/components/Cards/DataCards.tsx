@@ -32,7 +32,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
         <div className="flex flex-col items-end justify-between px-4 mb-4">
           <div className="w-full flex flex-row justify-between align-middle items-center mb-4">
-            <div className="text-gray-600 dark:text-white p-3 mr-4 rounded-full bg-gray-300 dark:bg-gray-700 border dark:border-gray-500 border-gray-400">
+            <div className="text-gray-600 dark:text-white p-3 mr-4 rounded-full bg-gray-200 dark:bg-gray-700 border dark:border-green-500 border-gray-300">
               {icon}
             </div>
             {/* Data */}

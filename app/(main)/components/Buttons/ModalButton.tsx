@@ -8,21 +8,19 @@ interface ModalButtonProps {
   icon?: React.ReactElement;
   modalTitle: string;
   modalInstruction: string;
-  modalCTA: string;
+  modalCTA?: string;
 }
 
 export const ViewOutletDetailsModal: React.FC<ModalButtonProps> = ({
   outletName,
   modalTitle,
   modalInstruction,
-  modalCTA,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };

@@ -9,7 +9,7 @@ import { ViewOutletDetailsModal } from "../Buttons/ModalButton";
 export const UserDropdown = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
     weekday: "long",
@@ -22,6 +22,9 @@ export const UserDropdown = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen((prevIsOpen) => !prevIsOpen);
   };
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -31,15 +34,11 @@ export const UserDropdown = () => {
         setIsDropdownOpen(false);
       }
     };
-
-    if (isDropdownOpen) {
-      document.addEventListener("click", handleOutsideClick);
-    }
-
+    window.addEventListener("click", handleOutsideClick);
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("click", handleOutsideClick);
     };
-  }, [isDropdownOpen]);
+  }, []);
 
   /* Handle options */
   const handleOptionClick = (option: any) => {
@@ -82,14 +81,14 @@ export const UserDropdown = () => {
           </div>
           <ul className="w-full text-gray-900 dark:text-white">
             <li
-              onClick={() => handleOptionClick("Export All Data")}
+              onClick={() => closeDropdown()}
               className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b dark:hover:bg-gray-700 border-gray-300 dark:border-gray-700 hover:bg-gray-300 transition-all ease-in duration-150"
             >
               <FaFileExcel className="w-4 mr-2" />
               <span className="w-full text-left">Export All Data</span>
             </li>
             <li
-              onClick={() => handleOptionClick("Query Staff/Outlet")}
+              onClick={() => closeDropdown()}
               className="flex flex-row items-center justify-between text-sm py-2 px-4 cursor-pointer border-b dark:hover:bg-gray-700 border-gray-300 dark:border-gray-700 hover:bg-gray-300 transition-all ease-in duration-150"
             >
               <FaQuestionCircle className="w-4 mr-2" />
@@ -99,7 +98,8 @@ export const UserDropdown = () => {
               <span className="w-full">
                 <DarkModeToggle
                   darkMode={darkMode}
-                  handleDarkModeToggle={handleDarkModeToggle}
+                  handleToggle={handleDarkModeToggle}
+                  additionalFunction={closeDropdown}
                 />
               </span>
             </li>
@@ -121,12 +121,13 @@ export const UserDropdown = () => {
 // Table Options Dropdown
 export const TableOptionsDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   /* Dropdown Toggle stuff */
   const toggleDropdown = () => {
     setIsDropdownOpen((prevIsOpen) => !prevIsOpen);
   };
+
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -136,21 +137,11 @@ export const TableOptionsDropdown = () => {
         setIsDropdownOpen(false);
       }
     };
-
-    if (isDropdownOpen) {
-      document.addEventListener("click", handleOutsideClick);
-    }
-
+    window.addEventListener("click", handleOutsideClick);
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("click", handleOutsideClick);
     };
-  }, [isDropdownOpen]);
-
-  /* Handle options */
-  const handleOptionClick = (option: any) => {
-    console.log(`Option clicked: ${option}`);
-    setIsDropdownOpen(false);
-  };
+  }, []);
 
   return (
     <div className="relative">
