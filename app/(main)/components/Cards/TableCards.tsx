@@ -66,7 +66,7 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title }) => {
         >
           <h1 className="w-full text-center">{title}</h1>
           <span
-            className="mx-2 flex-end text-white/50 font-bold rounded hover:cursor-pointer"
+            className="mx-2 flex-end text-white/50 hover:text-white font-bold rounded hover:cursor-pointer transition-all duration-150"
             onClick={handleExpandClick}
           >
             {expanded ? <IoContractOutline /> : <IoExpandOutline />}

@@ -3,7 +3,7 @@ import { FaFileExcel, FaQuestionCircle, FaUser } from "react-icons/fa";
 import React, { useState, useEffect, useRef } from "react";
 import DarkModeToggle from "../Theme";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { ViewOutletDetailsModal } from "../Buttons/ModalButton";
+import { ViewOutletDetailsModal } from "../Modals/ModalButton";
 
 // User Dropdown
 export const UserDropdown = () => {
