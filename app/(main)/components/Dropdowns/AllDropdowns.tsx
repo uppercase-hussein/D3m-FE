@@ -31,7 +31,7 @@ export const UserDropdown = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsDropdownOpen(false);
+        closeDropdown;
       }
     };
     window.addEventListener("click", handleOutsideClick);
@@ -127,14 +127,16 @@ export const TableOptionsDropdown = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen((prevIsOpen) => !prevIsOpen);
   };
-
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsDropdownOpen(false);
+        closeDropdown;
       }
     };
     window.addEventListener("click", handleOutsideClick);
