@@ -53,12 +53,12 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title }) => {
     >
       <div
         className={`${
-          expanded ? "bg-black bg-opacity-50" : ""
+          expanded ? "bg-black bg-opacity-50 z-50" : ""
         } transition-opacity duration-300 fixed inset-0 pointer-events-none`}
       ></div>
       <div
         className={`w-full ${
-          expanded ? "h-screen p-4" : "bg-white dark:bg-gray-900"
+          expanded ? "h-screen p-4 z-50" : "bg-white dark:bg-gray-900"
         } text-gray-900 rounded-md shadow-md overflow-hidden transition-all duration-300`}
       >
         <div
