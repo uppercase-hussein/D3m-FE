@@ -16,31 +16,31 @@ const DashboardPage = () => {
           {/* Header Stat Cards */}
           <div className="w-full overflow-auto flex flex-row justify-between">
             <StatCard
-              data={1234300}
+              data={`₦1234300`}
               statTitle="Total Sales"
               statPercentage={83}
-              statDescription={"Annual total sales"}
+              statDescription={"Total sales for this month"}
               icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
-              data={1234300}
-              statTitle="Total Sales"
+              data={`₦1234300`}
+              statTitle="Revenue Growth"
               statPercentage={83}
-              statDescription={"Annual total sales"}
+              statDescription={"Monthly gains"}
               icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
-              data={1234300}
-              statTitle="Total Sales"
+              data={`₦1234300`}
+              statTitle="Monthly Expenses"
               statPercentage={83}
-              statDescription={"Annual total sales"}
+              statDescription={"Monthly expenditure"}
               icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
             <StatCard
-              data={1234300}
-              statTitle="Total Sales"
+              data={`₦1234300`}
+              statTitle="Inventory turnover"
               statPercentage={83}
-              statDescription={"Annual total sales"}
+              statDescription={"Rate of inventory sale/restock"}
               icon={<FaNairaSign className="text-green-400 dark:text-green-500" />}
             />
           </div>

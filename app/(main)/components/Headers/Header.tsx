@@ -78,15 +78,15 @@ export default function Header() {
               selectable={true}
               select={formData.exitType || ""}
               options={[
-                "termination",
-                "absconded",
-                "resignation",
-                "redundancy",
-                "retirement",
-                "dismissal",
-                "deceased",
-                "standby",
-                "unavailable",
+                "Filter Option 1",
+                "Filter Option 2",
+                "Filter Option 3",
+                "Filter Option 4",
+                "Filter Option 5",
+                "Filter Option 6",
+                "Filter Option 7",
+                "Filter Option 8",
+                "Filter Option 9",
               ].map((div) => ({
                 value: div,
                 label: div,
@@ -98,15 +98,15 @@ export default function Header() {
               selectable={true}
               select={formData.exitType || ""}
               options={[
-                "termination",
-                "absconded",
-                "resignation",
-                "redundancy",
-                "retirement",
-                "dismissal",
-                "deceased",
-                "standby",
-                "unavailable",
+                "Filter Option 1",
+                "Filter Option 2",
+                "Filter Option 3",
+                "Filter Option 4",
+                "Filter Option 5",
+                "Filter Option 6",
+                "Filter Option 7",
+                "Filter Option 8",
+                "Filter Option 9",
               ].map((div) => ({
                 value: div,
                 label: div,
@@ -118,15 +118,15 @@ export default function Header() {
               selectable={true}
               select={formData.exitType || ""}
               options={[
-                "termination",
-                "absconded",
-                "resignation",
-                "redundancy",
-                "retirement",
-                "dismissal",
-                "deceased",
-                "standby",
-                "unavailable",
+                "Filter Option 1",
+                "Filter Option 2",
+                "Filter Option 3",
+                "Filter Option 4",
+                "Filter Option 5",
+                "Filter Option 6",
+                "Filter Option 7",
+                "Filter Option 8",
+                "Filter Option 9",
               ].map((div) => ({
                 value: div,
                 label: div,
@@ -138,15 +138,15 @@ export default function Header() {
               selectable={true}
               select={formData.exitType || ""}
               options={[
-                "termination",
-                "absconded",
-                "resignation",
-                "redundancy",
-                "retirement",
-                "dismissal",
-                "deceased",
-                "standby",
-                "unavailable",
+                "Filter Option 1",
+                "Filter Option 2",
+                "Filter Option 3",
+                "Filter Option 4",
+                "Filter Option 5",
+                "Filter Option 6",
+                "Filter Option 7",
+                "Filter Option 8",
+                "Filter Option 9",
               ].map((div) => ({
                 value: div,
                 label: div,

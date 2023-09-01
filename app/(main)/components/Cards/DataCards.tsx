@@ -9,7 +9,7 @@ Chart.register(CategoryScale);
 
 interface StatCardProps {
   icon?: any;
-  data?: number;
+  data?: any;
   statTitle: string;
   statPercentage?: number;
   statDescription?: string;

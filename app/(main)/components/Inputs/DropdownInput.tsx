@@ -46,7 +46,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
             styles={{
               menuList: (baseStyles, state) => ({
                 ...baseStyles,
-                height: "5rem",
+                height: "7rem",
                 zIndex: 70,
               }),
             }}
