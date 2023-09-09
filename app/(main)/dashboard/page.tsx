@@ -7,6 +7,7 @@ import {
 } from "../components/Cards/DataCards";
 import { FaMoneyCheck, FaNairaSign } from "react-icons/fa6";
 import { OutletTableCard } from "../components/Cards/TableCards";
+import ChatAi from "../components/ChatAi";
 
 const DashboardPage = () => {
   return (
@@ -56,6 +57,7 @@ const DashboardPage = () => {
               <PieChartCard statTitle="Staff satisfaction" />
               <PieChartCard statTitle="Staff retainment" />
             </div>
+            <ChatAi/>
           </div>
         </div>
       </div>
