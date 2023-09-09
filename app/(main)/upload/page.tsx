@@ -1,26 +1,83 @@
 "use client";
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import { UploadHistoryTable } from "../components/Tables/AllTables";
-// import { TextInput } from "../components/Inputs/Inputs";
-import "react-datepicker/dist/react-datepicker.css";
-import { useMutation, useQuery } from "@tanstack/react-query";
-// import { getPayrollHistory, uploadPayroll } from "@/app/api/payroll.api";
-import { useSelector } from "react-redux";
-// import { RootState } from "@/app/redux/store";
-import { FaCloudUploadAlt } from "react-icons/fa";
-// import { PayslipTable } from "../components/Tables/PayslipTable";
+import React, { FormEventHandler, useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { FaSignOutAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
-// import { Loader } from "@/app/(auth)/components/Loader";
-// import { queryClient } from "@/app/redux/provider";
+import Cookies from "js-cookie";
+import { uploadReport } from "@/app/api/app.api";
+import { useRouter } from "next/navigation";
 
-interface FileSelect {
+export interface OutletType {
+  _id: string;
   name: string;
-  size: number;
+  username: string;
+  league: string;
+  noOfDays: number;
+  allTimeSales: number;
+  averageDailySales: number;
+  totalSeasonSales: number;
+  created: string;
+  updated: string;
+  __v: number;
 }
-const UploadFile = () => {
-  const [dateValue, setDateValue] = useState<any>(new Date());
+
+const UploadFilePage = () => {
+  const router = useRouter()
+  let stringedOutlet = Cookies.get("d3m-outlet");
+  let outlet: OutletType = stringedOutlet ? JSON.parse(stringedOutlet) : null;
+
   const [selectedFile, setSelectedFile] = useState<any>("");
+
+  const handleFileChange: FormEventHandler<HTMLInputElement> = (e) => {
+    if (e.currentTarget.files) {
+      setSelectedFile(e.currentTarget.files[0]);
+    }
+  }
+
+  const { mutate: uploadFile, isLoading: uploading } = useMutation(uploadReport, {
+    onError: (err) => {
+      // console.log(err);
+      toast.error("An error occured when uploading file, Try again.")
+    },
+    onSuccess: (data) => {
+      if (data.status === "error") {
+        return toast.error(data.message)
+      }
+      toast.success("File uploaded successfully");
+      setSelectedFile("")
+    },
+  });
+
+  const handleSubmit: FormEventHandler = async (e) => {
+    e.preventDefault();
+    if (!selectedFile) { return toast.error("You have not selected a file") }
+    const formData = new FormData();
+    formData.append("d3m", selectedFile);
+    let token = Cookies.get("d3m-auth-token")
+    if (token) {
+      await uploadFile({
+        formData, token
+      });
+    }
+  }
+
+  const handleLogout = () => {
+    Cookies.remove("d3m-auth-token");
+    Cookies.remove("d3m-outlet");
+    router.push("/login")
+  }
+
+  const checkAuth = () => {
+    if (!outlet) {
+      router.push("/login")
+    }
+  }
+
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+
 
   return (
     <>
@@ -30,38 +87,38 @@ const UploadFile = () => {
             Upload File
           </h1>
           <p className="text-sm text-center font-normal mb-2 text-black/60">
-            Choose a date and upload the file for that month
+            Upload your day sales as exported from Eazee
           </p>
+          <p
+            className={`text-md  text-center font-light ${outlet ? "text-green-600" : "text-red-600"
+              } font-bold`}
+          >
+            {outlet
+              ? `Logged in as ${outlet.name} `
+              : "You are not logged in"}
+          </p>
+          <div className="text-center my-3 flex justify-center">
+            <button
+              className=" flex items-center space-x-2 p-4 sm:p-2 bg-gray-200 dark:bg-gray-600 shadow-lg text-red-500 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md hover:scale-105 transition-all duration-150"
+              onClick={handleLogout}
+            >
+              {/* {icon} */}
+              <FaSignOutAlt />
+              <span className="hidden sm:block">Logout</span>
+            </button>
+          </div>
         </div>
+
+
+
         <div className="px-14">
           <div className="w-full flex flex-col md:flex-row justify-between my-6 mx-4 bg-white rounded-md">
             {/* {isLoading && <Loader />} */}
             <form
-              onSubmit={() => {
-                console.log("submitted!");
-              }}
+              onSubmit={handleSubmit}
               className="w-full md:w-[50%] md:mx-2 mx-auto"
             >
               <div className="h-auto relative my-2 p-4">
-                <div className="my-2 flex flex-col border border-gray-200 px-4 rounded-md shadow-lg">
-                  <label
-                    htmlFor="monthSelect"
-                    className="text-black border-b border-gray-200 font-semibold my-2"
-                  >
-                    Select Month
-                  </label>
-                  <DatePicker
-                    id="monthSelect"
-                    selected={dateValue}
-                    className={`w-full py-2 text-black`}
-                    showMonthYearPicker
-                    dateFormat="MM/yyyy"
-                    onChange={(val: Date) => {
-                      console.log(val);
-                    }}
-                  />
-                </div>
-
                 <div className="mt-8 mb-2 pb-4 flex flex-col">
                   <div className="flex items-center justify-center w-full mb-4">
                     <label
@@ -110,34 +167,30 @@ const UploadFile = () => {
                         id="dropzone-file"
                         type="file"
                         className="hidden"
-                        onChange={() => {
-                          console.log("file uploaded!");
-                        }}
+                        onChange={handleFileChange}
                       />
                     </label>
                   </div>
 
                   <button
                     type={"submit"}
-                    className={`btn button text-white ${
-                      selectedFile
-                        ? "bg-green-400 hover:bg-green-600"
-                        : "bg-trueGray-300"
-                    } transition-all duration-150 py-2 rounded-md font-semibold`}
-                    disabled={!selectedFile}
+                    className={`btn button text-white ${selectedFile
+                      ? "bg-green-500 hover:bg-green-600"
+                      : "bg-green-300"
+                      } transition-all duration-150 py-2 rounded-md font-semibold`}
+                    disabled={!selectedFile || uploading}
                   >
-                    {/* {isLoading ? "Submitting..." : "Submit"} */}
+                    {uploading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </div>
             </form>
 
-            <div className="w-full md:w-[50%] md:mx-2 mx-auto mt-4">
-              <UploadHistoryTable
+            {/* <div className="w-full md:w-[50%] md:mx-2 mx-auto mt-4"> */}
+            {/* <UploadHistoryTable
                 title="File Upload History"
-                // tableRow={payrollHistory.data}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
           </div>
         </div>
       </div>
@@ -145,4 +198,4 @@ const UploadFile = () => {
   );
 };
 
-export default UploadFile;
+export default UploadFilePage;

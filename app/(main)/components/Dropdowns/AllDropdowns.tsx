@@ -4,9 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import DarkModeToggle from "../Theme";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { ViewOutletDetailsModal } from "../Modals/ModalButton";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { OutletType } from "../../upload/page";
 
 // User Dropdown
 export const UserDropdown = () => {
+  const router = useRouter()
   const [darkMode, setDarkMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -17,6 +21,9 @@ export const UserDropdown = () => {
     month: "long",
     day: "numeric",
   });
+  let stringedUser = Cookies.get("d3m-outlet");
+  let user: OutletType = stringedUser ? JSON.parse(stringedUser) : null;
+
 
   /* Dropdown Toggle stuff */
   const toggleDropdown = () => {
@@ -46,6 +53,13 @@ export const UserDropdown = () => {
     setIsDropdownOpen(false);
   };
 
+  const handleLogout = () => {
+    Cookies.remove("d3m-auth-token");
+    Cookies.remove("d3m-outlet");
+    setIsDropdownOpen(false);
+    router.push("/login")
+  };
+
   /* Dark mode stuff */
   const handleDarkModeToggle = () => {
     const newDarkMode = !darkMode;
@@ -73,7 +87,7 @@ export const UserDropdown = () => {
           {/* Dropdown content */}
           <div className="pt-4 pb-6 px-2 rounded-t-md bg-gray-100 dark:bg-gray-800">
             <h1 className="text-center font-semibold rounded-t-md dark:text-white">
-              Welcome, User
+              Welcome, {user?user.name.split(" ")[0]:"User"}
             </h1>
             <p className="text-center text-xs text-gray-500 dark:text-white/60">
               {formattedDate}
@@ -104,7 +118,7 @@ export const UserDropdown = () => {
               </span>
             </li>
             <li
-              onClick={() => handleOptionClick("Sign Out")}
+              onClick={handleLogout}
               className="mt-1 py-3 px-4 text-center text-red-500 dark:text-red-400 text-sm cursor-pointer transition-all ease-in duration-150"
             >
               <span className="hover:border-b border-red-500 dark:border-red-400">

@@ -1,19 +1,52 @@
 "use client";
-import Chart from "chart.js/auto";
-import { Bar, Pie } from "react-chartjs-2";
+// import Chart from "chart.js/auto";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement
+} from 'chart.js';
+
+import { Bar, Line, Pie } from "react-chartjs-2";
 import React, { useEffect, useState } from "react";
 import { IoExpandOutline, IoContractOutline } from "react-icons/io5";
-import { CategoryScale } from "chart.js";
 
-Chart.register(CategoryScale);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement
+);
 
 interface StatCardProps {
   icon?: any;
-  data?: any;
-  statTitle: string;
+  subtitle?: string;
+  values: any;
+  labels: any;
+  title: string;
   statPercentage?: number;
   statDescription?: string;
+  toggleChart: (val:string)=>void;
 }
+
+
+export const lineChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+  },
+};
 
 /* 
   Header Stat Card Component 
@@ -58,24 +91,28 @@ export const StatCard: React.FC<StatCardProps> = ({
 /* 
   Bar chart Card Component
 */
-export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
+export const BarChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels, values , toggleChart}) => {
   const [expanded, setExpanded] = useState(false);
+  const [chartToggle, setChartToggle] = useState("sales")
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  // const labels = ["January", "February", "March", "April", "May", "June"];
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: "#33FF92A1",
+        label: subtitle,
+        backgroundColor: "#0000FF80",
         borderColor: "#29EF22",
-        data: [0, 10, 5, 2, 20, 30, 45],
+        data: values //[0, 10, 5, 2, 20, 30, 45],
       },
     ],
   };
+  useEffect(() => {
+    toggleChart(chartToggle)
+  }, [chartToggle])
 
   return (
     <>
@@ -87,7 +124,7 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
         <div
           className={`w-full flex justify-between bg-red-500 dark:bg-gray-800 text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 uppercase`}
         >
-          <h1 className="w-full text-center">{statTitle}</h1>
+          <h1 className="w-full text-center">{title}</h1>
           <span
             className="mx-2 flex-end text-white/50 hover:text-white font-bold rounded hover:cursor-pointer transition-all duration-150"
             onClick={handleExpandClick}
@@ -96,6 +133,12 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
           </span>
         </div>
         <div className={expanded ? "" : ""}>
+        <div className='flex justify-end'>
+          <select className='text-black right select shadow p-3 mx-3' value={chartToggle} onChange={(e)=>setChartToggle(e.target.value)}>
+            <option value="sales">Sales</option>
+            <option value="count">Customer Count</option>
+          </select>
+          </div>
           <Bar data={data} className="px-12 py-2" />
         </div>
       </div>
@@ -116,10 +159,82 @@ export const BarChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
   );
 };
 
+
+
+/* 
+  Line chart Card Component
+*/
+export const LineChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels, values, toggleChart }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [chartToggle, setChartToggle] = useState("sales")
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: subtitle,
+        backgroundColor: "",
+        borderColor: "#FF0000",
+        data: values //[0, 10, 5, 2, 20, 30, 45],
+      },
+    ],
+  };
+  useEffect(() => {
+    toggleChart(chartToggle)
+  }, [chartToggle])
+  
+
+  return (
+    <>
+      <div
+        className={`relative w-full bg-white dark:bg-gray-200 rounded-md shadow-md ${
+          expanded ? "h-screen" : ""
+        }`}
+      >
+        <div
+          className={`w-full flex justify-between bg-red-500 dark:bg-gray-800 text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 uppercase`}
+        >
+          <h1 className="w-full text-center">{title}</h1>
+          <span
+            className="mx-2 flex-end text-white/50 hover:text-white font-bold rounded hover:cursor-pointer transition-all duration-150"
+            onClick={handleExpandClick}
+          >
+            {expanded ? <IoContractOutline /> : <IoExpandOutline />}
+          </span>
+        </div>
+        <div className={expanded ? "" : ""}>
+          <div className='flex justify-end'>
+          <select className='text-black right select shadow p-3 mx-3' value={chartToggle} onChange={(e)=>setChartToggle(e.target.value)}>
+            <option value="sales">Sales</option>
+            <option value="count">Customer Count</option>
+          </select>
+          </div>
+          <Line options={lineChartOptions} data={data} className="px-12 py-2" />
+        </div>
+      </div>
+      {expanded && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
+          <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white rounded shadow-md">
+          <Line options={lineChartOptions} data={data} className="p-4" />
+            <button
+              className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
+              onClick={handleExpandClick}
+            >
+              Minimize
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 /* 
 Pie chart Card Component 
 */
-export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
+export const PieChartCard: React.FC<StatCardProps> = ({ title }) => {
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -148,7 +263,7 @@ export const PieChartCard: React.FC<StatCardProps> = ({ statTitle }) => {
         <div
           className={`w-full flex justify-between bg-red-500 dark:bg-gray-800 text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 uppercase`}
         >
-          <h1 className="w-full text-center">{statTitle}</h1>
+          <h1 className="w-full text-center">{title}</h1>
           <span
             className="mx-2 flex-end text-white/50 hover:text-white font-bold rounded hover:cursor-pointer transition-all duration-150"
             onClick={handleExpandClick}
