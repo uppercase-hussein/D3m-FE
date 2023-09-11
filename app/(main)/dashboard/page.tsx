@@ -217,7 +217,7 @@ const DashboardPage = () => {
               <PieChartCard statTitle="Staff satisfaction" />
               <PieChartCard statTitle="Staff retainment" /> */}
             </div>
-            <ChatAi/>
+            <ChatAi orderInfo={data}/>
           </div>
         </div>
       </div>
