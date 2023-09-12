@@ -8,6 +8,7 @@ import {
 } from "../components/Cards/DataCards";
 import { FaMoneyCheck, FaNairaSign } from "react-icons/fa6";
 import { OutletTableCard } from "../components/Cards/TableCards";
+import ChatAi from "../components/ChatAi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { OutletType } from "../upload/page";
@@ -328,6 +329,7 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
               <PieChartCard statTitle="Staff satisfaction" />
               <PieChartCard statTitle="Staff retainment" /> */}
             </div>
+            <ChatAi orderInfo={data}/>
           </div>
         </div>
       </div>
