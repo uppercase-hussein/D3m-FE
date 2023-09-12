@@ -6,11 +6,28 @@ import { DropdownInput } from "../Inputs/DropdownInput";
 import { UserDropdown } from "../Dropdowns/AllDropdowns";
 import Tooltip from "../Tooltips";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getOutlets } from "@/app/api/app.api";
+import { toast } from "react-toastify";
 
-type terminateStaff = {
-  exitDate: string | undefined;
-  exitType: string | undefined;
-};
+
+interface OutletData {
+  _id: string;
+  name: string;
+  username: string;
+  league: string;
+  noOfDays: number;
+  allTimeSales: number;
+  averageDailySales: number;
+  totalSeasonSales: number;
+  created: string;
+  updated: string;
+  // __v: number;
+  budgetPercentage: number;
+  timeElapsed: number;
+  budget: number;
+  role: string;
+}
 
 export default function Header() {
   const pathname = usePathname();
@@ -18,18 +35,34 @@ export default function Header() {
   if (isActivePageUploads) {
     return null;
   }
+  const [allOutlet, setAllOutlet] = useState<OutletData[]>([]);
 
-  const [formData, setFormData] = useState<terminateStaff>({
-    exitType: undefined,
-    exitDate: undefined,
+  const [formData, setFormData] = useState({
+    selectedOutlet: "",
   });
 
-  const setTerminateFormData = (field: string, value: string) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [field]: value,
-    }));
-  };
+//get all outlets
+const {data} = useQuery({
+  queryKey: ["getAllOutlets"],
+  queryFn: getOutlets,
+  onError: err => {
+    console.log(err)
+    toast.error("An internal server error has occured")
+  },
+  onSuccess: data => {
+    if(data.status === "error"){
+    return toast.error(data.message)
+    }
+    setAllOutlet(data.allOutlets)
+}
+})
+
+const handleChange = (type:string, value:string) => {
+  setFormData(prev=>({
+    ...prev,
+    [type]: value
+  }))
+}
 
   return (
     <nav className="z-50 w-full fixed flex flex-col bg-gray-100/90 dark:bg-gray-900/90 text-gray-900 shadow-lg top-0 left-0">
@@ -74,29 +107,20 @@ export default function Header() {
             </div>
             {/* Filters for data - Dropdowns */}
             <DropdownInput
-              label="Filter One"
+              label="Select Outlet"
               selectable={true}
-              select={formData.exitType || ""}
-              options={[
-                "Filter Option 1",
-                "Filter Option 2",
-                "Filter Option 3",
-                "Filter Option 4",
-                "Filter Option 5",
-                "Filter Option 6",
-                "Filter Option 7",
-                "Filter Option 8",
-                "Filter Option 9",
-              ].map((div) => ({
-                value: div,
-                label: div,
+              select={formData.selectedOutlet}
+              options={allOutlet.map((outlet) => ({
+                value: outlet._id,
+                label: outlet.name,
               }))}
-              onChange={(value) => setTerminateFormData("exitType", `${value}`)}
+              onChange={(val) =>handleChange("selectedOutlet",val )}
             />
+
             <DropdownInput
               label="Filter Two"
               selectable={true}
-              select={formData.exitType || ""}
+              // select={formData.exitType || ""}
               options={[
                 "Filter Option 1",
                 "Filter Option 2",
@@ -111,12 +135,12 @@ export default function Header() {
                 value: div,
                 label: div,
               }))}
-              onChange={(value) => setTerminateFormData("exitType", `${value}`)}
+              // onChange={(value) => setTerminateFormData("exitType", `${value}`)}
             />
             <DropdownInput
               label="Filter Three"
               selectable={true}
-              select={formData.exitType || ""}
+              // select={formData.exitType || ""}
               options={[
                 "Filter Option 1",
                 "Filter Option 2",
@@ -131,12 +155,12 @@ export default function Header() {
                 value: div,
                 label: div,
               }))}
-              onChange={(value) => setTerminateFormData("exitType", `${value}`)}
+              // onChange={(value) => setTerminateFormData("exitType", `${value}`)}
             />
             <DropdownInput
               label="Filter Four"
               selectable={true}
-              select={formData.exitType || ""}
+              // select={formData.exitType || ""}
               options={[
                 "Filter Option 1",
                 "Filter Option 2",
@@ -151,7 +175,7 @@ export default function Header() {
                 value: div,
                 label: div,
               }))}
-              onChange={(value) => setTerminateFormData("exitType", `${value}`)}
+              // onChange={(value) => setTerminateFormData("exitType", `${value}`)}
             />
           </div>
         </div>

@@ -28,6 +28,7 @@ ChartJS.register(
 );
 
 interface StatCardProps {
+  horizontal?:boolean;
   icon?: any;
   subtitle?: string;
   values: any;
@@ -39,14 +40,7 @@ interface StatCardProps {
 }
 
 
-export const lineChartOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-  },
-};
+ 
 
 /* 
   Header Stat Card Component 
@@ -91,14 +85,13 @@ export const StatCard: React.FC<StatCardProps> = ({
 /* 
   Bar chart Card Component
 */
-export const BarChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels, values , toggleChart}) => {
+export const BarChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels, values , toggleChart, horizontal = false}) => {
   const [expanded, setExpanded] = useState(false);
   const [chartToggle, setChartToggle] = useState("sales")
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  // const labels = ["January", "February", "March", "April", "May", "June"];
   const data = {
     labels: labels,
     datasets: [
@@ -113,6 +106,17 @@ export const BarChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels,
   useEffect(() => {
     toggleChart(chartToggle)
   }, [chartToggle])
+
+
+const barChartOption = {
+  indexAxis: horizontal?'y' as const: 'x' as const,
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+  },
+};
 
   return (
     <>
@@ -139,13 +143,13 @@ export const BarChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels,
             <option value="count">Customer Count</option>
           </select>
           </div>
-          <Bar data={data} className="px-12 py-2" />
+          <Bar data={data} options={barChartOption} className="px-12 py-2" />
         </div>
       </div>
       {expanded && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
           <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white rounded shadow-md">
-            <Bar data={data} className="p-4" />
+            <Bar data={data} options={barChartOption} className="p-4" />
             <button
               className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
               onClick={handleExpandClick}
@@ -185,7 +189,15 @@ export const LineChartCard: React.FC<StatCardProps> = ({ title, subtitle, labels
   useEffect(() => {
     toggleChart(chartToggle)
   }, [chartToggle])
-  
+
+  const lineChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+    },
+  };
 
   return (
     <>
