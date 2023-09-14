@@ -60,7 +60,7 @@ const ChatAi = ({orderInfo}: any) => {
       const source = new SSE(url, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${"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"}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_KEY}`,
         },
         method: "POST",
         payload: JSON.stringify(data),

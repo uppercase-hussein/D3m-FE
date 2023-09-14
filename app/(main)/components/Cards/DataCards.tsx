@@ -210,7 +210,7 @@ export const StackedBarChartCard: React.FC<StackedBarChartProps> = ({ title, lab
     setExpanded(!expanded);
   };
 // console.log(values)
-  const modifiedValues = values.map(item => item.map(val=>val.name));
+  // const modifiedValues = values.map(item => item.map(val=>val.name));
   // console.log(modifiedValues)
 
   // const data = {
@@ -309,13 +309,13 @@ const barChartOption = {
             <option value="count">Customer Count</option>
           </select>
           </div>
-          <Bar data={data} options={barChartOption} className="px-12 py-2" />
+          {/* <Bar data={data} options={barChartOption} className="px-12 py-2" /> */}
         </div>
       </div>
       {expanded && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
           <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white rounded shadow-md">
-            <Bar data={data} options={barChartOption} className="p-4" />
+            {/* <Bar data={data} options={barChartOption} className="p-4" /> */}
             <button
               className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
               onClick={handleExpandClick}

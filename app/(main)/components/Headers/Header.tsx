@@ -116,7 +116,37 @@ const handleChange = (type:string, value:string) => {
               }))}
               onChange={(val) =>handleChange("selectedOutlet",val )}
             />
-
+            <DropdownInput
+              label="Select Outlet"
+              selectable={true}
+              select={formData.selectedOutlet}
+              options={allOutlet.map((outlet) => ({
+                value: outlet._id,
+                label: outlet.name,
+              }))}
+              onChange={(val) =>handleChange("selectedOutlet",val )}
+            />
+            <DropdownInput
+              label="Select Outlet"
+              selectable={true}
+              select={formData.selectedOutlet}
+              options={allOutlet.map((outlet) => ({
+                value: outlet._id,
+                label: outlet.name,
+              }))}
+              onChange={(val) =>handleChange("selectedOutlet",val )}
+            />
+            <DropdownInput
+              label="Select Outlet"
+              selectable={true}
+              select={formData.selectedOutlet}
+              options={allOutlet.map((outlet) => ({
+                value: outlet._id,
+                label: outlet.name,
+              }))}
+              onChange={(val) =>handleChange("selectedOutlet",val )}
+            />
+{/* 
             <DropdownInput
               label="Filter Two"
               selectable={true}
@@ -176,7 +206,7 @@ const handleChange = (type:string, value:string) => {
                 label: div,
               }))}
               // onChange={(value) => setTerminateFormData("exitType", `${value}`)}
-            />
+            /> */}
           </div>
         </div>
       </div>
