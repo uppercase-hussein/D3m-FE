@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoExpandOutline, IoContractOutline } from "react-icons/io5";
-import { CardQuantityTable, CardTable, TableRowItem } from "../Tables/AllTables";
+import { CardQuantityTable, CardTable, TableQuantityItem, TableRowItem } from "../Tables/AllTables";
 
 interface TableCardProps {
   title: string;
   type: string;
-  data: TableRowItem[]
+  data: TableRowItem[] | TableQuantityItem[]
 }
 
 export const OutletTableCard: React.FC<TableCardProps> = ({ title, data, type }) => {
@@ -13,7 +13,7 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title, data, type })
   const [expanded, setExpanded] = useState(false);
   const expandRef = useRef<HTMLDivElement>(null);
   const [itemsToShow, setItemsToShow] = useState(5)
-  const [tableData, setTableData] = useState<TableRowItem[]>(data.slice(0, 5))
+  const [tableData, setTableData] = useState<TableRowItem[]| TableQuantityItem[]>(data.slice(0, 5))
 
   useEffect(() => {
     if(data) setTableData(data.slice(0, itemsToShow))
@@ -70,7 +70,7 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title, data, type })
           </span>
         </div>
         <div className='flex justify-end'>
-        <select className='text-black right select shadow p-3 mx-3' value={itemsToShow} onChange={(e)=>setItemsToShow(e.target.value)}>
+        <select className='text-black right select shadow p-3 mx-3' value={itemsToShow} onChange={(e:any)=>setItemsToShow(e.target.value)}>
             <option value={5}>5</option>
             <option value={10}>10</option>
             <option value={20}>20</option>

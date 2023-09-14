@@ -21,7 +21,7 @@ export interface TableQuantityItem {
 
 interface TableProp {
   title?: string;
-  tableRow?: TableRowItem[];
+  tableRow?: TableRowItem[] | TableQuantityItem[];
 }
 
 /* 
@@ -289,7 +289,7 @@ export const TopProductByPeriodTable = ({ tableRow }:{tableRow:TopProductByPerio
               tableRow?.map((item: any, index: any) => (<>
               <h3 className="title m-3 bold mb-0 divide-x-4 ">{item.period}</h3>
               {
-                item.items.map((product:{name:string, totalQuantity:number}, index:number)=><tr
+                item.items.map((product:{name:string, totalQuantity:number, totalSoldAmount:number}, index:number)=><tr
                   key={index}
                   className={`hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 ease-in cursor-pointer ${
                     index % 2 ? "bg-gray-100 dark:bg-gray-800" : null
@@ -297,7 +297,8 @@ export const TopProductByPeriodTable = ({ tableRow }:{tableRow:TopProductByPerio
                 >
                   <td className="px-6 py-2 whitespace-no-wrap">
                     <div className="text-sm leading-5 font-medium text-gray-900 dark:text-gray-100">
-                      {index + 1}
+                      {/* {index + 1} */}
+                      {product.totalQuantity}
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
@@ -307,7 +308,7 @@ export const TopProductByPeriodTable = ({ tableRow }:{tableRow:TopProductByPerio
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
                     <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
-                    ₦{formatNumber(product.totalQuantity)}
+                    ₦{formatNumber(product.totalSoldAmount)}
                     </div>
                   </td>
                 </tr>)

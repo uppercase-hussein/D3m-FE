@@ -4,6 +4,7 @@ import {
   BarChartCard,
   LineChartCard,
   PieChartCard,
+  StackedBarChartCard,
   StatCard,
 } from "../components/Cards/DataCards";
 import { FaMoneyCheck, FaNairaSign } from "react-icons/fa6";
@@ -79,33 +80,22 @@ const DashboardPage = () => {
     orderByPeriodLabel: [] as string[],
     orderByPeriodTotalSales: [] as number[],
     orderByPeriodOrderCount: [] as number[],
-    topSellingAmount:[] as TableRowItem[],
-    topSellingQuantity:[] as TableQuantityItem[],
-    topProductsByPeriod: [] as TopProductByPeriodType[],
+    topSellingAmountLabel: [] as string[],
+    topSellingAmountValue: [] as number[],
+    topSellingQuantityLabel: [] as string[],
+    topSellingQuantityValue: [] as number[],
+    leastSellingAmountLabel: [] as string[],
+    leastSellingAmountValue: [] as number[],
+    leastSellingQuantityLabel: [] as string[],
+    leastSellingQuantityValue: [] as number[],
+    // topProductsByPeriod: [] as TopProductByPeriodType[],
+    topProductsByPeriodLabel: [] as string[],
+    topProductsByPeriodOrderValues: [] as {
+      name: string;
+      totalQuantity: number;
+    }[],
   })
 
-
-
-  const [barChartData, setBarChartData] = useState({
-    label: salesData.outletNames,
-    value: salesData.outletSales,
-    subTitle: "Total sales ₦"
-  })
-  const [lineChartData, setLineChartData] = useState({
-    label: salesData.dailySalesLabel,
-    value: salesData.dailySalesTotal,
-    subTitle: "Daily Sales ₦"
-  })
-  const [dayOfWeekData, setDayOfWeekData] = useState({
-    label: salesData.orderByDayLabel,
-    value: salesData.orderByDayTotalSales,
-    subTitle: "Total sales ₦ X"
-  })
-const [orderByPeriodData, setOrderByPeriodData] = useState({
-  label: salesData.orderByPeriodLabel,
-  value: salesData.orderByPeriodTotalSales,
-  subTitle: "Total sales ₦ Y"
-})
 
   const checkAuth = () => {
     if (!user) {
@@ -118,13 +108,13 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
     queryFn: getReport,
     refetchOnWindowFocus: false,
     onSuccess: response => {
-      console.clear()
-      console.log(response)
+      // console.clear()
+      console.log(response.data)
       if (response.status === "error") {
         return toast.error(response.message)
       }
-      let allOutletSales: AllOutletDataType[] = response.data.allOutletdata;
-      let outletData: OutletDataType[] = response.data.outletData;
+      let allOutletSales: AllOutletDataType[] = response.data.salesByOutlet;
+      let outletData: OutletDataType[] = response.data.overallOutletSales;
       if (allOutletSales && outletData) {
         allOutletSales.sort((a, b) => b.totalSales - a.totalSales);
         let totalSales = allOutletSales.reduce((sum, outletData) => sum + outletData.totalSales, 0);
@@ -146,6 +136,7 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
           acc[curr.date].orderCount += curr.orderCount;
           return acc;
         }, {});
+        // console.log(groupedOutletData)
 
         let summedOutletData = Object.values(groupedOutletData);
         summedOutletData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -159,15 +150,33 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
         let orderByDayTotalSales = orderByday.map((day: OrderByDayType) => day.totalSales);
         let orderByDayOrderCount = orderByday.map((day: OrderByDayType) => day.orderCount);
 
-        let orderByPeriod = response.data.averageOrderValueByPeriod
+        // let orderByPeriod = response.data.averageOrderValueByPeriod
+        let orderByPeriod = response.data.salesByTime;
         let orderByPeriodLabel = orderByPeriod.map((val: OrderByPeriodType) => val.period);
         let orderByPeriodTotalSales = orderByPeriod.map((val: OrderByPeriodType) => val.totalSales);
         let orderByPeriodOrderCount = orderByPeriod.map((val: OrderByPeriodType) => val.orderCount);
 
-        let topSellingAmount = response.data.topSellingItemsByAmount.slice(0, 20);
-        let topSellingQuantity = response.data.topSellingItemsByQuantity.slice(0, 20);
+        let topSellingAmount = response.data.topSellingItemsByAmount.slice(0, 10);
+        let topSellingAmountLabel = topSellingAmount.map((val: { name: string, totalSoldAmount: number }) => val.name)
+        let topSellingAmountValue = topSellingAmount.map((val: { name: string, totalSoldAmount: number }) => val.totalSoldAmount)
+
+        let topSellingQuantity = response.data.topSellingItemsByQuantity.slice(0, 10);
+        let topSellingQuantityLabel = topSellingQuantity.map((val: { name: string, totalSoldQuantity: number }) => val.name)
+        let topSellingQuantityValue = topSellingQuantity.map((val: { name: string, totalSoldQuantity: number }) => val.totalSoldQuantity)
+
         let topProductsByPeriod = response.data.mostSoldItemsByTime;
-        
+        // console.log(topProductsByPeriod); return;
+        let topProductsByPeriodLabel = topProductsByPeriod.map((val: TopProductByPeriodType) => val.period);
+        let topProductsByPeriodOrderValues = topProductsByPeriod.map((val: TopProductByPeriodType) => val.items);
+
+        let leastSellingAmount = response.data.leastSellingItemsByAmount.slice(0, 10);
+        let leastSellingAmountLabel = leastSellingAmount.map((val: { name: string, totalSoldAmount: number }) => val.name)
+        let leastSellingAmountValue = leastSellingAmount.map((val: { name: string, totalSoldAmount: number }) => val.totalSoldAmount)
+
+        let leastSellingQuantity = response.data.leastSellingItemsByQuantity.slice(0, 10);
+        let leastSellingQuantityLabel = leastSellingQuantity.map((val: { name: string, totalSoldQuantity: number }) => val.name)
+        let leastSellingQuantityValue = leastSellingQuantity.map((val: { name: string, totalSoldQuantity: number }) => val.totalSoldQuantity)
+
         setSalesData({
           dailySalesLabel,
           dailySalesTotal,
@@ -182,9 +191,16 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
           orderByPeriodLabel,
           orderByPeriodTotalSales,
           orderByPeriodOrderCount,
-          topSellingAmount,
-          topProductsByPeriod,
-          topSellingQuantity,
+          topSellingAmountLabel,
+          topSellingAmountValue,
+          topSellingQuantityLabel,
+          topSellingQuantityValue,
+          topProductsByPeriodLabel,
+          topProductsByPeriodOrderValues,
+          leastSellingAmountLabel,
+          leastSellingAmountValue,
+          leastSellingQuantityLabel,
+          leastSellingQuantityValue,
         })
 
 
@@ -198,77 +214,11 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
     }
   })
 
-  const toggleLineChart = (value: string) => {
-    if (value === "count") {
-      setLineChartData({
-        label: salesData.dailySalesLabel,
-        value: salesData.dailySalesOrderCount,
-        subTitle: "Customer Count"
-      })
-    } else {
-      setLineChartData({
-        label: salesData.dailySalesLabel,
-        value: salesData.dailySalesTotal,
-        subTitle: "Daily Sales ₦"
-      })
-    }
-  }
 
-  const toggleBarChart = (value: string) => {
-    if (value === "count") {
-      setBarChartData({
-        label: salesData.outletNames,
-        value: salesData.outletOrderCount,
-        subTitle: "Customer Count"
-      })
-    } else {
-      setBarChartData({
-        label: salesData.outletNames,
-        value: salesData.outletSales,
-        subTitle: "Total sales ₦"
-      })
-    }
-  }
 
-  const toggleDayOfWeekChart = (value: string) => {
-    if (value === "count") {
-      setDayOfWeekData({
-        label: salesData.orderByDayLabel,
-        value: salesData.orderByDayOrderCount,
-        subTitle: "Customer Count"
-      })
-    } else {
-      setDayOfWeekData({
-        label: salesData.orderByDayLabel,
-        value: salesData.orderByDayTotalSales,
-        subTitle: "Total sales ₦"
-      })
-    }
-  }
-  const toggleOrderByPeriodChart = (value: string) => {
-    if (value === "count") {
-      setOrderByPeriodData({
-        label: salesData.orderByPeriodLabel,
-        value: salesData.orderByPeriodOrderCount,
-        subTitle: "Customer Count"
-      })
-    } else {
-      setOrderByPeriodData({
-        label: salesData.orderByPeriodLabel,
-        value: salesData.orderByPeriodTotalSales,
-        subTitle: "Total sales ₦"
-      })
-    }
-  }
   useEffect(() => {
     checkAuth()
   }, [])
-  useEffect(() => {
-    toggleLineChart("sales")
-    toggleBarChart("sales")
-    toggleDayOfWeekChart("sales")
-    toggleOrderByPeriodChart("sales")
-  }, [salesData])
 
   return (
     <>
@@ -307,29 +257,59 @@ const [orderByPeriodData, setOrderByPeriodData] = useState({
           </div>
           <div className="w-full flex flex-col">
             <div className="w-full flex flex-row justify-between mx-auto my-2">
-              <BarChartCard horizontal={true} title="Sales by outlet" subtitle={barChartData.subTitle} labels={barChartData.label} values={barChartData.value} toggleChart={toggleBarChart} />
+              <BarChartCard
+                horizontal={true}
+                labels={salesData.outletNames}
+                title="Sales by outlet"
+                subtitle={["Total sales ₦", "Customer Count"]}
+                values={[salesData.outletSales, salesData.outletOrderCount]}
+              />
             </div>
             <div className="w-full flex flex-row justify-between mx-auto my-2">
-              <LineChartCard title="Outlets Daily Sales" subtitle={lineChartData.subTitle} labels={lineChartData.label} values={lineChartData.value} toggleChart={toggleLineChart} />
+              <StackedBarChartCard title="Top Products (by Period)" subtitle={""} labels={salesData.topProductsByPeriodLabel}
+                values={salesData.topProductsByPeriodOrderValues} />
+              <LineChartCard
+                title="Outlets Daily Sales"
+                labels={salesData.dailySalesLabel}
+                subtitle={["Total sales ₦", "Customer Count"]}
+                values={[salesData.dailySalesTotal, salesData.dailySalesOrderCount]}
+              />
             </div>
             <div className="w-full overflow-auto flex flex-row  items-start justify-between mx-auto my-2">
-              <BarChartCard title="Sales by Time of the Day" subtitle={orderByPeriodData.subTitle} labels={orderByPeriodData.label} values={orderByPeriodData.value} toggleChart={toggleOrderByPeriodChart} />
-
-              <BarChartCard title="Sales by Day of the Week" subtitle={dayOfWeekData.subTitle} labels={dayOfWeekData.label} values={dayOfWeekData.value} toggleChart={toggleDayOfWeekChart} />
+              <BarChartCard
+                title="Sales by Time of the Day"
+                labels={salesData.orderByPeriodLabel}
+                subtitle={["Total sales ₦", "Customer Count"]}
+                values={[salesData.orderByPeriodTotalSales, salesData.orderByPeriodOrderCount]}
+              />
+              <BarChartCard
+                title="Sales by Day of the Week"
+                subtitle={["Total sales ₦", "Customer Count"]}
+                labels={salesData.orderByDayLabel}
+                values={[salesData.orderByDayTotalSales, salesData.orderByDayOrderCount]}
+              />
             </div>
             <div className="w-full flex flex-col md:flex-row items-start justify-between my-2">
-              <OutletTableCard title="Top Products (by Amount)" type="amount" data={salesData.topSellingAmount } />
-              <OutletTableCard title="Top Products (by Quantity)" type="quantity" data={salesData.topSellingQuantity } />
-              <MostSoldTableCard title="Top Products (by Period)" data={salesData.topProductsByPeriod } />
-              
+              <PieChartCard title="Top Products (by Amount)" labels={salesData.topSellingAmountLabel} values={salesData.topSellingAmountValue} />
+              <PieChartCard title="Least Sold Products (by Amount)" labels={salesData.leastSellingAmountLabel} values={salesData.leastSellingAmountValue} />
+              <PieChartCard title="Top Products (by Quantity)" labels={salesData.topSellingQuantityLabel} values={salesData.topSellingQuantityValue} />
+              {/* <PieChartCard title="Least Sold Products (by Quantity)" labels={salesData.leastSellingQuantityLabel} values={salesData.leastSellingQuantityValue} /> */}
             </div>
 
-            <div className="w-full overflow-auto flex flex-row justify-between mx-auto my-2">
-              {/* <PieChartCard statTitle="Staff satisfaction" />
-              <PieChartCard statTitle="Staff satisfaction" />
-              <PieChartCard statTitle="Staff retainment" /> */}
+            {/* <div className="w-full flex flex-col md:flex-row items-start justify-between my-2">
+            <PieChartCard title="Top Products (by Quantity)" labels={salesData.topSellingQuantityLabel} values={salesData.topSellingQuantityValue} />
+              <PieChartCard title="Least Sold Products (by Quantity)" labels={salesData.leastSellingQuantityLabel} values={salesData.leastSellingQuantityValue} />
+            </div> 
+            <div className="w-full flex flex-col md:flex-row items-start justify-between my-2">
+            <MostSoldTableCard title="Top Products (by Period)" data={salesData.topProductsByPeriod } /> 
+              <OutletTableCard title="Top Products (by Quantity)" type="quantity" data={salesData.topSellingQuantity} />
+            </div> */}
+<hr className="my-3 border shadow"/>
+
+            <div className="w-full flex flex-col md:flex-row items-start justify-between my-2">
+            {data && <ChatAi orderInfo={data} />}
             </div>
-            <ChatAi orderInfo={data}/>
+
           </div>
         </div>
       </div>
