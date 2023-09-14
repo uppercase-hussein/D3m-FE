@@ -18,8 +18,7 @@ const ChatAi = (orderInfo: any) => {
   Determine which outlet is the most successful at selling high-priced items.
   Provide any additional insights or anomalies that are noteworthy within the Nigerian context from the dataset.
   Feel free to use data visualization, statistical analysis, or any other appropriate techniques to support your findings.
-  All your answers should depend on ${prompt}.
-`;
+  All your answers should depend on the question ${prompt}. Do not repeat any of the provided instructions on your answer.`;
   const resultRef = useRef("");
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const ChatAi = (orderInfo: any) => {
       const source = new SSE(url, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${"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"}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         method: "POST",
         payload: JSON.stringify(data),
