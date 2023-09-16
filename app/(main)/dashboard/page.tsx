@@ -7,7 +7,7 @@ import {
   StackedBarChartCard,
   StatCard,
 } from "../components/Cards/DataCards";
-import { FaMoneyCheck, FaNairaSign } from "react-icons/fa6";
+import { FaMoneyCheck, FaNairaSign, FaUsers } from "react-icons/fa6";
 import { OutletTableCard } from "../components/Cards/TableCards";
 import ChatAi from "../components/ChatAi";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,9 @@ import { formatNumber } from "@/app/utils/helpers";
 import moment from "moment";
 import { MostSoldTableCard } from "../components/Cards/MostSoldItemPeriod";
 import { TableQuantityItem, TableRowItem } from "../components/Tables/AllTables";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { Loader } from "@/app/(auth)/components/Loader";
 
 
 interface AllOutletDataType {
@@ -59,10 +62,12 @@ export interface TopProductByPeriodType {
 
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 const DashboardPage = () => {
   const router = useRouter()
   let token = Cookies.get("d3m-auth-token");
   let stringedUser = Cookies.get("d3m-outlet");
+  const { outletId, timeframe, startDate, endDate, date } = useSelector((state:RootState)=>state.app)
   let user: OutletType = stringedUser ? JSON.parse(stringedUser) : null;
   const [salesData, setSalesData] = useState({
     totalSales: 0,
@@ -103,8 +108,8 @@ const DashboardPage = () => {
     }
   }
 
-  const { data } = useQuery({
-    queryKey: ['getAnalytics', `${token}`],
+  const { data, isFetching:fetchingData, isLoading:loadingData } = useQuery({
+    queryKey: ['getAnalytics', token, outletId, timeframe, startDate, endDate, date],
     queryFn: getReport,
     refetchOnWindowFocus: false,
     onSuccess: response => {
@@ -140,7 +145,8 @@ const DashboardPage = () => {
 
         let summedOutletData = Object.values(groupedOutletData);
         summedOutletData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-        let dailySalesLabel = summedOutletData.map(data => moment(data.date).format('Do MMM  YYYY'));
+        let dailySalesLabel = summedOutletData.map(data => moment(data.date).format('ddd Do MMM,  YYYY'));
+        
         let dailySalesTotal = summedOutletData.map(data => data.totalSales);
         let dailySalesOrderCount = summedOutletData.map(data => data.orderCount);
 
@@ -222,52 +228,54 @@ const DashboardPage = () => {
 
   return (
     <>
+    {(loadingData || fetchingData) && <Loader />}
       <div className="w-full h-auto bg-scale bg-gray-200 dark:bg-gray-900">
         <div className="pt-80 md:pt-44 pb-12 px-14">
           {/* Header Stat Cards */}
           <div className="w-full overflow-auto flex flex-row justify-between">
             <StatCard
-              data={formatNumber(salesData.totalSales)}
+              data={formatNumber(salesData.totalSales | 0)}
               statTitle="Total Sales"
               statPercentage={0}
               statDescription={"Total sales for the period"}
               icon={<FaNairaSign className="text-green-600 dark:text-green-500" />}
             />
             <StatCard
-              data={formatNumber(salesData.customerCount, 0)}
+              data={formatNumber(salesData.customerCount | 0, 0)}
               statTitle="Customer Count"
               statPercentage={0}
               statDescription={"Total orders made"}
-              icon={<FaNairaSign className="text-green-600 dark:text-green-500" />}
+              icon={<FaUsers className="text-green-600 dark:text-green-500" />}
             />
             <StatCard
-              data={formatNumber(salesData.averageSpend)}
+              data={formatNumber(salesData.averageSpend | 0)}
               statTitle="Average Spend"
               statPercentage={0}
               statDescription={"Average order value"}
               icon={<FaNairaSign className="text-green-600 dark:text-green-500" />}
             />
-            <StatCard
+            {/* <StatCard
               data={``}
               statTitle=""
               statPercentage={0}
               statDescription={""}
               icon={<FaNairaSign className="text-green-600 dark:text-green-500" />}
-            />
+            /> */}
           </div>
           <div className="w-full flex flex-col">
-            <div className="w-full flex flex-row justify-between mx-auto my-2">
+            { outletId === "0" && <div className="w-full flex flex-row justify-between mx-auto my-2">
               <BarChartCard
-                horizontal={true}
+                // horizontal={true}
                 labels={salesData.outletNames}
                 title="Sales by outlet"
                 subtitle={["Total sales ₦", "Customer Count"]}
                 values={[salesData.outletSales, salesData.outletOrderCount]}
               />
             </div>
+}
             <div className="w-full flex flex-row justify-between mx-auto my-2">
-              <StackedBarChartCard title="Top Products (by Period)" subtitle={""} labels={salesData.topProductsByPeriodLabel}
-                values={salesData.topProductsByPeriodOrderValues} />
+              {/* <StackedBarChartCard title="Top Products (by Period)" subtitle={""} labels={salesData.topProductsByPeriodLabel}
+                values={salesData.topProductsByPeriodOrderValues} /> */}
               <LineChartCard
                 title="Outlets Daily Sales"
                 labels={salesData.dailySalesLabel}

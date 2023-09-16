@@ -34,9 +34,16 @@ export const getOutlets = async () => {
       }
 }
   
-export const getReport = async (data:{queryKey:string[]}) => {
+export const getReport = async (data:{queryKey:any[]}) => {
+  let url = "/analytics?query=true";
+  if(data.queryKey[2] && data.queryKey[2] !== "0" ){ url += `&outletId=${data.queryKey[2]}`}
+  if(data.queryKey[3])url += `&timeframe=${data.queryKey[3]}`
+  if(data.queryKey[4] && data.queryKey[5]){ url += `&startDate=${data.queryKey[4]}&endDate=${data.queryKey[5]}`}
+  if(data.queryKey[6])url += `&date=${data.queryKey[6]}`
+  console.log(data.queryKey[4], data.queryKey[5])
+  console.log(url)
   try{
-    let response = await axios.get("/analytics", {
+    let response = await axios.get(url, {
       headers: {
           token:data.queryKey[1],
         }

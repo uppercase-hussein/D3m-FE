@@ -38,7 +38,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
         className="block mb-1 font-bold text-sm text-gray-700"
         htmlFor="dropdown"
       >
-        {title}
+        {label}
       </label>
       <div>
         {selectable && (
