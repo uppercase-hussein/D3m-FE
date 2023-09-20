@@ -408,12 +408,20 @@ export const PieChartCard: React.FC<PieChartProps> = ({ title, labels, values })
     setExpanded(!expanded);
   };
 
+  const pieChartOption = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right' as const,
+      },
+    }
+  };
   const data = {
     labels,
     datasets: [
       {
         label: title,
-        backgroundColor: values.map(item=>getColor(0.7)),
+        backgroundColor: values.map(item=>getColor(0.5)),
         data: values,
       },
     ],
@@ -438,13 +446,98 @@ export const PieChartCard: React.FC<PieChartProps> = ({ title, labels, values })
           </span>
         </div>
         <div className={expanded ? "" : ""}>
-          <Doughnut data={data} width={10} height={10} />
+          <Doughnut data={data} options={pieChartOption} width={10} height={10} />
         </div>
       </div>
       {expanded && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
           <div className="w-[300px] min-w-[500px] bg-white rounded shadow-md">
-            <Doughnut data={data} width={10} height={10} className="p-4" />
+            <Doughnut data={data} options={pieChartOption}  width={10} height={10} className="p-4" />
+            <button
+              className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
+              onClick={handleExpandClick}
+            >
+              Minimize
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+
+/* 
+  MultiBar chart Card Component
+*/
+export const MultiBarChartCard: React.FC<BarChartProps> = ({ title, subtitle, labels, values, horizontal = false}) => {
+  const [expanded, setExpanded] = useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+  // console.log(values)
+  let firstValues = values.map((val:any) => val[0]);
+  let secondValues = values.map((val:any) => val[1]);
+  let thirdValues = values.map((val:any) => val[2]);
+
+  let datasets =  [
+    {
+      label: firstValues.map((val:{name:string})=>val.name),
+      backgroundColor: getColor(),
+      data: firstValues.map((val:{totalQuantity:number})=>val.totalQuantity)
+    },
+    {
+      label: secondValues.map((val:{name:string})=>val.name),
+      backgroundColor: getColor(),
+      data: secondValues.map((val:{totalQuantity:number})=>val.totalQuantity)
+    },
+    {
+      label: thirdValues.map((val:{name:string})=>val.name),
+      backgroundColor: getColor(),
+      data: thirdValues.map((val:{totalQuantity:number})=>val.totalQuantity)
+    }
+  ]
+  const data = {
+    labels, datasets
+  };
+
+
+const barChartOption = {
+  indexAxis: horizontal?'y' as const: 'x' as const,
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right' as const,
+    },
+  }
+};
+
+  return (
+    <>
+      <div
+        className={`relative w-full bg-white dark:bg-gray-200 rounded-md shadow-md ${
+          expanded ? "h-screen" : ""
+        }`}
+      >
+        <div
+          className={`w-full flex justify-between bg-red-500 dark:bg-gray-800 text-lg text-center text-white font-bold rounded-t-md mb-4 py-2 border-b border-gray-200 dark:border-gray-600 uppercase`}
+        >
+          <h1 className="w-full text-center">{title}</h1>
+          <span
+            className="mx-2 flex-end text-white/50 hover:text-white font-bold rounded hover:cursor-pointer transition-all duration-150"
+            onClick={handleExpandClick}
+          >
+            {expanded ? <IoContractOutline /> : <IoExpandOutline />}
+          </span>
+        </div>
+        <div className={expanded ? "" : ""}>
+          <Bar data={data} options={barChartOption} className="px-12 py-2" />
+        </div>
+      </div>
+      {expanded && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center pt-8 transition-all ease-in duration-100">
+          <div className="md:w-[600px] w-full md:min-w-[1000px] bg-white rounded shadow-md">
+            <Bar data={data} options={barChartOption} className="p-4" />
             <button
               className="w-full mt-8 mx-auto text-white/50 hover:text-white bg-red-400 hover:bg-red-500 text-xs font-bold p-4 uppercase text-center transition-all ease-in duration-150"
               onClick={handleExpandClick}

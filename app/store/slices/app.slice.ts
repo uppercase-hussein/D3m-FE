@@ -32,10 +32,13 @@ export const appSlice = createSlice({
     },
     setSingleDate:  (state, action: PayloadAction<string | Date | undefined>) => {
         state.date = action.payload
-    }
+    },
+    setSelectedProduct: (state, action: PayloadAction<string | undefined>) => {
+      state.product = action.payload
+  },
   },
 });
 
-export const { setOutlet, setTimeframe, setStartAndEndDate, setSingleDate  } = appSlice.actions;
+export const { setOutlet, setTimeframe, setStartAndEndDate, setSingleDate, setSelectedProduct  } = appSlice.actions;
 
 export default appSlice.reducer;
