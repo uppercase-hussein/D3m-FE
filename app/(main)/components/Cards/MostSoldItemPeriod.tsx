@@ -1,24 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoExpandOutline, IoContractOutline } from "react-icons/io5";
-import { CardQuantityTable, CardTable, TableQuantityItem, TableRowItem } from "../Tables/AllTables";
+import { CardTable, TopProductByPeriodTable } from "../Tables/AllTables";
+import { TopProductByPeriodType } from "../../dashboard/page";
 
 interface TableCardProps {
   title: string;
-  type: string;
-  data: TableRowItem[] | TableQuantityItem[]
+  data: TopProductByPeriodType[]
 }
 
-export const OutletTableCard: React.FC<TableCardProps> = ({ title, data, type }) => {
+export const MostSoldTableCard: React.FC<TableCardProps> = ({ title, data }) => {
   /* Expand card functionality */
   const [expanded, setExpanded] = useState(false);
   const expandRef = useRef<HTMLDivElement>(null);
-  const [itemsToShow, setItemsToShow] = useState(5)
-  const [tableData, setTableData] = useState<TableRowItem[]| TableQuantityItem[]>(data.slice(0, 5))
-
-  useEffect(() => {
-    if(data) setTableData(data.slice(0, itemsToShow))
-  }, [itemsToShow, data])
-  
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -69,19 +62,7 @@ export const OutletTableCard: React.FC<TableCardProps> = ({ title, data, type })
             {expanded ? <IoContractOutline /> : <IoExpandOutline />}
           </span>
         </div>
-        <div className='flex justify-end'>
-        <select className='text-black right select shadow p-3 mx-3' value={itemsToShow} onChange={(e:any)=>setItemsToShow(e.target.value)}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-          </select>
-        </div>
-        {
-          type === "amount" && <CardTable tableRow={tableData} />
-        }
-        {
-          type === "quantity" && <CardQuantityTable tableRow={tableData} />
-        }
+        <TopProductByPeriodTable tableRow={data} />
       </div>
     </div>
   );

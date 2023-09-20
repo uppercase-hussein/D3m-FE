@@ -7,17 +7,21 @@ import { useDispatch } from "react-redux";
 import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { TableOptionsDropdown } from "../Dropdowns/AllDropdowns";
+import { formatNumber } from "@/app/utils/helpers";
+import { TopProductByPeriodType } from "../../dashboard/page";
 
-interface TableRowItem {
-  id: number;
-  year: number;
-  userGain: number;
-  userLost: number;
+export interface TableRowItem {
+  name: string;
+  totalSoldAmount: number;
+}
+export interface TableQuantityItem {
+  name: string;
+  totalSoldQuantity: number;
 }
 
 interface TableProp {
   title?: string;
-  tableRow?: TableRowItem[];
+  tableRow?: TableRowItem[] | TableQuantityItem[];
 }
 
 /* 
@@ -124,15 +128,12 @@ export const CardTable = ({ tableRow }: TableProp) => {
                 S/N
               </th>
               <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
-                Column 1
+               Product
               </th>
               <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
-                Column 2
+               Total Sales
               </th>
-              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
-                Column 3
-              </th>
-              <th className="py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider"></th>
+              {/* <th className="py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider"></th> */}
             </tr>
           </thead>
           <tbody>
@@ -151,30 +152,169 @@ export const CardTable = ({ tableRow }: TableProp) => {
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
                     <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
-                      <a href={item.path} target="_blank">
-                        {item.outletName}
-                      </a>
+                        {item.name}
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap">
                     <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
-                      <a href={item.path} target="_blank">
-                        {item.userGain}
-                      </a>
+                    ₦{formatNumber(item.totalSoldAmount)}
                     </div>
                   </td>
-                  <td className="px-6 py-2 whitespace-no-wrap">
-                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
-                      <a href={item.path} target="_blank">
-                        {item.userLost}
-                      </a>
-                    </div>
-                  </td>
-                  <td className="whitespace-no-wrap p-4 text-black dark:text-white">
+                  {/* <td className="whitespace-no-wrap p-4 text-black dark:text-white">
                     <TableOptionsDropdown />
-                  </td>
+                  </td> */}
                 </tr>
               ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="bg-gray font-medium uppercase text-center text-gray-500 p-4"
+                >
+                  Data not found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
+
+
+
+
+
+
+
+export const CardQuantityTable = ({ tableRow }: TableProp) => {
+  //   const router = useRouter();
+  const isEmptyData = tableRow?.length === 0;
+  //   const dispatch = useDispatch();
+  //   const handleClick = () => {
+
+  return (
+    <>
+      <div className="w-[95%] mx-auto overflow-x-auto pt-2 relative flex flex-col min-w-0 break-words bg-white dark:bg-gray-900 mb-6 shadow-xl rounded-lg mt-4">
+        <table className="divide-y divide-gray-200 dark:divide-gray-600">
+          <thead>
+            <tr>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+                S/N
+              </th>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+               Product
+              </th>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+                Quantity
+              </th>
+              {/* <th className="py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider"></th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {!isEmptyData ? (
+              tableRow?.map((item: any, index: any) => (
+                <tr
+                  key={index}
+                  className={`hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 ease-in cursor-pointer ${
+                    index % 2 ? "bg-gray-100 dark:bg-gray-800" : null
+                  }`}
+                >
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 font-medium text-gray-900 dark:text-gray-100">
+                      {index + 1}
+                    </div>
+                  </td>
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
+                        {item.name}
+                    </div>
+                  </td>
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
+                    {formatNumber(item.totalSoldQuantity,0)}
+                    </div>
+                  </td>
+                  {/* <td className="whitespace-no-wrap p-4 text-black dark:text-white">
+                    <TableOptionsDropdown />
+                  </td> */}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="bg-gray font-medium uppercase text-center text-gray-500 p-4"
+                >
+                  Data not found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
+
+
+
+export const TopProductByPeriodTable = ({ tableRow }:{tableRow:TopProductByPeriodType[]}) => {
+  //   const router = useRouter();
+  const isEmptyData = tableRow?.length === 0;
+  //   const dispatch = useDispatch();
+  //   const handleClick = () => {
+
+  return (
+    <>
+      <div className="w-[95%] mx-auto overflow-x-auto pt-2 relative flex flex-col min-w-0 break-words bg-white dark:bg-gray-900 mb-6 shadow-xl rounded-lg mt-4">
+        <table className="divide-y divide-gray-200 dark:divide-gray-600">
+          <thead>
+            <tr>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+                S/N
+              </th>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+               Product
+              </th>
+              <th className="px-6 py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider">
+               Total Sales
+              </th>
+              {/* <th className="py-3 bg-gray-100 dark:bg-gray-600 text-left text-xs leading-4 font-medium dark:text-gray-100 text-gray-500 uppercase tracking-wider"></th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {!isEmptyData ? (
+              tableRow?.map((item: any, index: any) => (<>
+              <h3 className="title m-3 bold mb-0 divide-x-4 ">{item.period}</h3>
+              {
+                item.items.map((product:{name:string, totalQuantity:number, totalSoldAmount:number}, index:number)=><tr
+                  key={index}
+                  className={`hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 ease-in cursor-pointer ${
+                    index % 2 ? "bg-gray-100 dark:bg-gray-800" : null
+                  }`}
+                >
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 font-medium text-gray-900 dark:text-gray-100">
+                      {/* {index + 1} */}
+                      {product.totalQuantity}
+                    </div>
+                  </td>
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
+                        {product.name}
+                    </div>
+                  </td>
+                  <td className="px-6 py-2 whitespace-no-wrap">
+                    <div className="text-sm leading-5 text-gray-500 dark:text-gray-100">
+                    ₦{formatNumber(product.totalSoldAmount)}
+                    </div>
+                  </td>
+                </tr>)
+              }
+                
+                </> ))
             ) : (
               <tr>
                 <td
