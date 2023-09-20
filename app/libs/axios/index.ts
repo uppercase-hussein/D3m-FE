@@ -1,6 +1,7 @@
 import axios, { AxiosError }  from 'axios';
 
 const instance = axios.create({
+    // baseURL: 'http://localhost:1010',
     baseURL: 'https://goal-26ke.onrender.com',
   });
 

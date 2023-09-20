@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import React, { FormEventHandler, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation'
+import { Loader } from "./Loader";
 
 interface Tab {
   title: string;
@@ -14,7 +15,7 @@ interface Tab {
 const LoginForm = () => {
   const router = useRouter()
   const [pin, setPin] = useState<string>("");
-  const { mutate: sendLogin, isLoading } = useMutation(loginReq, {
+  const { mutate: sendLogin, isLoading:loadingLogin } = useMutation(loginReq, {
     onSuccess: (data) => {
       if (data.status === "error") {
         return toast.error(data.message);
@@ -39,6 +40,7 @@ const LoginForm = () => {
 
   return (
     <>
+    {loadingLogin && <Loader />}
       <div className="border-b border-gray-200 mb-4">
         <div className="flex justify-center transition-all duration-200 ease-in">
           <div className="px-4 py-2 cursor-pointer text-gray-400">Please enter your Secret PIN</div>
@@ -90,11 +92,11 @@ const LoginForm = () => {
 
         <div className="text-center mt-6">
           <button
-            className={`${isLoading?"bg-gray-600 hover:bg-gray-500":"bg-red-600 hover:bg-red-500"} text-white active:bg-red-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg  outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150`}
+            className={`${loadingLogin?"bg-gray-600 hover:bg-gray-500":"bg-red-600 hover:bg-red-500"} text-white active:bg-red-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg  outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150`}
             type="submit"
-            disabled={isLoading}
+            disabled={loadingLogin}
           >
-            {isLoading?"Processing":"Login"}
+            {loadingLogin?"Processing":"Login"}
           </button>
         </div>
       </form>
