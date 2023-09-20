@@ -271,7 +271,7 @@ const DashboardPage = () => {
             productTotalOrders: productTotalSale[0].totalOrders
           }))
         }else{
-          toast.error("No Sale record found ")
+         if(product) toast.error("No Sale record found ")
         }
 
         if (productWeeklySale.length > 0) {
@@ -285,7 +285,7 @@ const DashboardPage = () => {
             productWeeklySaleCount,
           }))
         }else{
-          toast.error("No Weekly sale record found")
+          if(product) toast.error("No Weekly sale record found")
         }
 
         if (productMonthlySale.length > 0) {
@@ -299,7 +299,7 @@ const DashboardPage = () => {
             productMonthlySaleCount,
           }))
         }else{
-          toast.error("No Monthly sale record found")
+          if(product) toast.error("No Monthly sale record found")
         }
 
       }
