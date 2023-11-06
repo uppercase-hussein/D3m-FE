@@ -11,7 +11,7 @@ export const loginReq = async (data: { username: string }) => {
 
 export const getOutlets = async () => {
   try {
-    let response = await axios.get("/outlets");
+    let response = await axios.get("/d3m/outlets");
     return response.data;
   } catch (error: any | unknown) {
     return error.response?.data;
